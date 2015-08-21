@@ -1,0 +1,1397 @@
+%\documentclass[abstract=on,ngerman]{scrreprt}
+\documentclass{article}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{indentfirst}
+\usepackage{braket}
+%\usepackage{wrapfig}
+%\epstopdfsetup{update}
+%\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage[colorlinks=true,citecolor=black,filecolor=black,urlcolor=black,linkcolor=black]{hyperref}
+%\usepackage{sansmathaccent}
+%\pdfmapfile{+sansmathaccent.map}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+%\selectlanguage{ngerman}
+\begin{document}
+\begin{titlepage}
+\begin{center}
+%\pagenumbering{Roman}
+ 
+\Large\textbf{Fakultät für Physik und Astronomie\\
+Ruprecht-Karls-Universität Heidelberg}
+
+\vspace{14cm}
+
+\normalsize
+Bachelorarbeit im Studiengang Physik\\
+vorgelegt von \\
+\vspace{0.5cm}
+\Large\textbf{Aaron Spring}\\
+\normalsize
+\vspace{0.5cm}
+aus Frankfurt/Main\\
+\vspace{0.5cm}
+\Large\textbf{Februar 2014}
+\normalsize
+\pagenumbering{Roman}
+\newpage
+\section*{}
+\newpage
+
+\Large\textbf{Bestimmung der Lebensdauer $\tau_{B_s^0}$ \\ mit $B_s^0 \rightarrow \phi \phi$ Zerfällen}
+
+\vspace{16.5cm}
+
+\normalsize
+Diese Bachelorarbeit wurde verfasst von Aaron Spring am \\
+Physikalischen Institut in Heidelberg\\
+unter der Aufsicht von \\
+Prof. Dr. Ulrich Uwer
+
+%\vfill
+
+%\setcounter{page}{3}
+\selectlanguage{ngerman}
+%\renewcaptionname{ngerman}{\abstractname}{Kurzfassung}
+
+%\AtBeginDocument{\addto\captionsenglish{\def\abstractname{Executive Summary}}
+\end{center}
+%\let\raggedsection\centering
+\section*{\small{\centerline{Kurzfassung}}}
+%\begin{abstract}
+
+
+In dieser Arbeit wird die Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons mit $B_s^0 \rightarrow \phi \phi$ Zerfällen mittels eines Maximum-Likelihood-Fits der rekonstruierten Zerfalls-zeitverteilung bestimmt. Zeitauflösungs- und Zeitakzeptanzeffekte werden dabei berücksichtigt. Die verwendeten $B_s^0 \rightarrow \phi \phi$ Kandidaten wurden mit dem LHCb-Experiment in den Jahren 2011 und 2012 am LHC bei  Schwerpunktsenergien von jeweils $\sqrt{s}_{2011}=7$ TeV und $\sqrt{s}_{2012}=8$ TeV aufgezeichnet. Die Daten entsprechen integrierten Luminositäten von $\mathcal{L}_{2011}= 1.1\;\text{fb}^{-1}$ und $\mathcal{L}_{2012}=2.0\;\text{fb}^{-1}$. Dabei werden insgesamt 1139$\pm$38 bzw. 2668$\pm$62  $B_s^0 \rightarrow \phi \phi$ Signal-kandidaten gefunden, mit denen die Lebensdauer $\tau_{B_s^0}$ bestimmt wird: %$\tau_{B_s^0}$ 
+\[(2011)\;\tau_{B_s^0}=1.624\pm0.050\;(stat)\;^{+0.020}_{-0.007}\;(syst)\;\text{ps }\]
+\[(2012)\;\tau_{B_s^0}=1.508\pm0.030\;(stat)\;^{+0.013}_{-0.008}\;(syst)\;\text{ps}.\]
+%Der Wert von 2012 stimmt mit dem bisherigen weltweitem Durchschnitt $\tau_{B_s^0}^{}=1.516\pm0.011\;\text{ps}$ überein \cite{lifetime} Der Wert von 2011 weicht signifikant davon ab.
+%\end{abstract}
+
+\vspace{6.5cm}
+
+\section*{\small{\centerline{Abstract}}}
+%\begin{abstract}
+In this thesis, the lifetime $\tau_{B_s^0}$ of the $B_s^0$-meson in $B_s^0 \rightarrow \phi \phi$ decays is determined by using a maximum likelihood fit of the reconstructed decay time destribution. Time resolution and time acceptance effects are accounted for. The data sample was collected by the LHCb experiment in 2011 and 2012 at center-of-mass energies of $\sqrt{s}_{2011}=7$ TeV and $\sqrt{s}_{2012}=8$ TeV, corresponding to integrated luminosities of $\mathcal{L}_{2011}= 1.1\;\text{fb}^{-1}$ and $\mathcal{L}_{2012}=2.0\;\text{fb}^{-1}$. The fit yields 1139$\pm$38 respectively 2668$\pm$62 $B_s^0 \rightarrow \phi \phi$ signal candidates and the lifetime $\tau_{B_s^0}$ is determined as: 
+\[(2011)\;\tau_{B_s^0}=1.624\pm0.050\;(stat)\;^{+0.021}_{-0.008}\;(syst)\;\text{ps }\]
+\[(2012)\;\tau_{B_s^0}=1.508\pm0.030\;(stat)\;^{+0.013}_{-0.009}\;(syst)\;\text{ps}.\]
+%The result of events from 2012 is compatible with the current world average $\tau_{B_s^0}^{}=1.516\pm0.011\;\text{ps}$ which the result of 2011 deviates significantly from \cite{lifetime}
+%\end{abstract}
+
+
+\end{titlepage}
+\selectlanguage{ngerman}
+\pagenumbering{Roman}
+\setcounter{page}{5}
+\tableofcontents{}
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section{Einleitung}
+Das Standardmodell der Teilchenphysik beschreibt erfolgreich die Physik der Elementarteilchen und ihrer Wechselwirkungen. Um die Theorie bei hohen Energieskalen zu testen, wurde der weltweit leistungsstärkste Ringbeschleuniger, der Large Hadron Collider (LHC), in Genf gebaut. Von diesen neuen Experimenten versprechen sich Teilchenphysiker Antworten auf offene Fragen der Elementarteilchenphysik und Kosmologie.
+
+Das LHCb-Experiment ist eines der vier großen Experimente am LHC. Es untersucht unter anderem unterschiedliches Verhalten von Teilchen und Anti-Teilchen in Zerfällen von B- und D-Mesonen. Präzise Analysen von CP-verletzen-den Prozessen können Hinweise auf neue Phänomene jenseits der Beschreibung des Standardmodells, sogenannte Neue Physik, geben. %Die wichtigesten Forschungsziele von LHCb, die sechs große Messungen abdecken, sind in einem Fahrplan  \cite{Collaboration2010a,Collaboration2010} zusammengefasst. Zur Erreichung dieser Ziele 
+Im Rahmen dieser Analysen sind Präzisionsmessungen nötig, die die genaue Kenntnis wichtiger Parameter der B-Zerfälle erfordern.
+
+Ein Ziel von Arbeitsgruppen bei LHCb ist es, eine zeitabhängige CP-Analyse von $B_s^0\rightarrow\phi\phi$ Zerfällen durchzuführen. Ein erster Schritt ist die Messung der \text{Lebensdauer} $\tau_{B_s^0}$ von $B_s^0$-Mesonen, welche in dieser Arbeit im Zerfallskanal $B_s^0\rightarrow \phi \phi$ bestimmt wird. Zerfälle in diesem Zerfallskanal sind nur über den sogenannten Schleifenprozess möglich. Daher ist das Verzweigungsverhältnis mit $\Gamma_{\phi \phi}$/$\Gamma_{total}=[17.7\pm2.4 ^{+5.7}_{-3.2}]\times 10^{-6}$  \cite{PDG} %[Aaltonen] 
+niedrig. Er weist eine hohe Sensitivität für mögliche Beiträge Neuer Physik auf. Die $\phi$-Mesonen zerfallen in zwei geladene Kaonen, die im Detektor nachweisbar sind. Bei der Analyse wird versucht, die Zeitauflösung des Detektors aus Daten mittels prompter Kanonen, die direkt am Primärvertex entstehen, zu ermitteln.%Dieser Zerfallskanal ist mit einem, anhand des Zerfalls $B_s^0\rightarrow J/\Psi \phi$ gemessenen, Verzweigungsverhaltnis (engl. branching ratio) BR=[2.40 $\pm$ 0.21(stat) $\pm$ 0.27 (syst) $\pm$ 0.82($\pm$)]$\cdot 10^{-5}$[benson2????????] oder BR=[1.8 $^{0.6}_{0.4}\cdot 10^{-5}$  \cite{Nakamura2012} oder $\frac{\Gamma_{\phi}{\phi}}{\Gamma_{total}}=$[17.7$\pm$2.4 $^{5.7}_{-3.2}\cdot 10^{-6}$  \cite{Nakamura2012} [Aaltonen] selten auf Grund der auftretenden Pinguinzerfälle, wodurch Beiträge von Neuer Physik in diesem Zerfallskanal getestet werden können. 
+
+Die zur Verfügung stehenden Ereignisse stammen aus Proton-Proton-Kol-lisionen bei Schwerpunktsenergien von $\sqrt{s}=7$ TeV und $\sqrt{s}=8$ TeV aus den Jahren 2011 und 2012. Sie entsprechen integrierten Luminositäten von $\mathcal{L}_{2011}= 1.1\;\text{fb}^{-1}$ und $\mathcal{L}_{2012}=2.0\;\text{fb}^{-1}$.
+\\
+
+Kapitel 2 bietet zunächst einen Einblick in das Standardmodell der Teilchen-physik. Der LHCb-Detektor wird in Kapitel 3 beschrieben. In Kapitel 4 wird die Herangehensweise an die Lebenszeitmessung vorgestellt. Kapitel 5 beschreibt die Selektion der Signalereignisse. In Kapitel 6 wird die Zeitauflösung bestimmt. In Kapitel 7 folgt die Bestimmung der Zeitakzeptanz. In Kapitel 8 wird das Fitmodell beschrieben. Die Lebensdauer $\tau_{B_s^0}$ wird mit vom Untergrund getrennten $B_s^0$-Signalkandidaten in Kapitel 9 bestimmt. In Kapitel 10 werden die systematischen Unsicherheiten analysiert, bevor abschließend in Kapitel 11 die wichtigen Ergebnisse zusammengefasst werden.
+
+
+\newpage
+\section{Theoretische Grundlagen}
+\subsection{Standardmodell der Teilchenphysik}
+Das Standardmodell der Teilchenphysik ist eine physikalische Theorie, die die Elementarteilchen und deren Wechselwirkungen mit Ausnahme der Gravitation untereinander beschreibt. Dabei sind fundamentale physikalischen Kräfte, nämlich die starke, schwache und elektromagnetische Wechselwirkung inbegriffen  \cite{glashow,weinberg,Salam}.
+Die fundamentalen Teilchen des Standardmodells in Abbildung \ref{fig:sm} sind Fermionen, aus denen sich die Materie zusammensetzt und Bosonen, die die Kräfte zwischen den Fermionen vermitteln. 
+
+\begin{figure}[h]
+	\centering
+  \includegraphics[width=12cm]{standardmodelldeutsch.jpg}
+	\caption{Graphische Veranschaulichung der fundamentalen Teilchen des Standardmodells der Teilchenphysik: zwölf fundamentale Fermionen und fünf fundamentale Bosonen \cite{sm}}
+\label{fig:sm}
+\end{figure}
+
+Das kürzlich entdeckte Higgs-Boson \cite{Collaboration2012ahiggs,Collaboration2012higgs} ist eine Konsequenz des Higgs-Mechanismus, mit dem der Ursprung der Ruhemassen der Elementarteilchen erklärt werden \cite{Higgs1964}. Fermionen sind Teilchen mit halbzahligem Spin und unterteilen sich in drittelzahlig geladene Quarks, ganzzahlig geladene Leptonen und elektrisch neutrale Leptonneutrinos. Aus den Quarks setzen sich die Hadronen zusammen. Ein Quark sowie ein Anti-Quark bilden ein Meson. Ein Baryon ist ein System aus drei Quarks. 
+
+Die Fermionen der Elementarteilchen sind in drei Generationen angeordnet. Nur leichte Elementarteilchen, also Neutrinos, Elektronen und in Proton und Neutron vorkommende up- und down-Quarks sind stabil. Teilchen der zweiten und dritten Generation können in leichtere Teilchen über die schwache Wechselwirkung zerfallen, die daher auch Flavour-ändernde Wechselwirkung genannt wird. Flavour ist eine Quantenzahl der Elementarteilchen. Bei einer Messung der Masse liegen Quarks physikalisch in einem Masseneigenzustand vor. Dieser setzt sich aus einer Mischung der Flavoureigenzustände zusammen. Sie ist durch die sogenannte CKM-Mischungsmatrix beschrieben, die nach den Theoretikern Cabibbo, Kobayashi und Maskawa benannt ist  \cite{Kobayashi1973}. Die Matrixelemente sind ein Maß für die Übergangswahrscheinlichkeit zwischen verschiedenen up-artigen und down-artigen Quarks. Es werden Zerfälle innerhalb einer Generation bevorzugt. Generationsübergreifende Zerfälle werden unterdrückt. 
+
+Diese unitäre Matrix lässt sich mittels dreier Winkel und einer komplexen Phase parametrisieren. Aus dieser Phase geht die Theorie von CP-Verletzung hervor. Nach Sakharov ist CP-Verletzung, die in Kaon-Systemen bereits 1964 nachgewiesen wurde \cite{Cronin1964}, eine Bedingung für die Baryonenasymmetrie \cite{Sakharov1966}. Jedoch reicht die CP-Verletzung des Standardmodells nicht aus, um die entstandene Baryonenasymmetrie im heutigen Universum zu erklären \cite{cpv}. Auch in $B_s^0$-Systemen ist CP-Verletzung nachgewiesen worden \cite{CDF2006}. %Alle Parameter des Standardmodells und die Resultate im Bereich der Teilchenphysik sind im Particle Data Booklet (PDG) nachschlagbar \cite{PDG}
+
+
+\subsection{B-Zerfälle}
+In der dritten Quarkfamilie wird das für das LHCb-Experiment namensgebende bottom-Quark gelistet. Da das sich in der selben Familie befindende top-Quark schwerer ist, kann das b-Quark nur in leichtere Quarks Cabibbo-unterdrückt übergehen. Daher haben B-Mesonen eine vergleichsweise lange Lebensdauer. Die mittlere Lebenszeit von B-Mesonen $\tau_b \approx 1,5\;\text{ps}$  \cite{PDG} führt bei hohen Impulsen zu einer makroskopisch messbaren Zerfallslänge von bis zu einigen Millimetern. %messung Abbildung \ref{fig:schema} zeigt einen auflösbaren Sekundärvertex an dem die invariante Masse der Zerfallsteilchen der des b-Hadrons entspricht.
+%Zerfällt ein b-Quark, so kann anhand der Zerfallsprodukte herausfinden, ob es sich um einen Quark oder einen Anti-Quark handelte, da der b-Quark $-\frac{1}{3}$ negativ geladen ist und so per $W^+$ in ein c oder u zerfallt, wobei das $W^+$ in ein positives Anti-Muon oder Pion zerfällt, wobei sich der komplette vorgang für ein Anti-b ladungsvertauscht verhält. Anhand von Analysen von Ereignissen mit geraden Vielfachen von b-Quarks lassen sich Studien zur CP-Verletzung durchführen. irrelevant oder?
+%\\Oszillationen?? hier eher irrelevant\\ 
+
+\subsubsection{Zerfallskanal $B_s^0\rightarrow \phi \phi$}
+Der Zerfallskanal $B_s^0\rightarrow \phi \phi$ ist erst im Jahr 2006 entdeckt worden \cite{first}. Aktuell wird an der Messung der CP-Verletzung in diesem Zerfallskanal gearbeitet \cite{Aaij2013,BensonANANOTE}. Das $B_s^0$-Meson zerfällt hier nicht über einen Baum-Prozess, sondern nur über einen unterdrückten Schleifenprozess, einen sogenannten Pinguin-Prozess. Abbildung \ref{fig:schema} zeigt das Feynman-Diagramm für den Zerfall $B_s^0\rightarrow \phi \phi$. Dabei geht das $\bar{b}$-Antiquark in einer Schleife mit einem W-Boson und einem ladungserhaltenden Quark in $\bar{s}s\bar{s}$-Quarks über, wobei je ein $s$ und ein $\bar{s}$ ein $\phi$-Meson bilden. Diese sehr kurzlebigen Teilchen mit Lebensdauer $\tau_{\phi}=1.55 \cdot 10^{-22}\;$s \cite{PDG} zerfallen über die starke Wechselwirkung favorisiert in zwei geladene Kaonen. 
+%\include{jaxodraw-2.1-0/bs2phiphi.tex} 
+
+\begin{figure}[h!]
+\centering
+    \subfigure{\includegraphics[width=0.79\textwidth]{eps/jaxodraw-2.jpg}} 
+  %  \subfigure{\includegraphics[width=0.49\textwidth]{eps/bs2KKKK.jpg}} 
+% \caption{Schematische Darstellung des Zerfalls $B_s^0 \rightarrow \phi \phi$  \cite{jaxo} \\ (links) 
+\caption{Feynman-Diagramm des Zerfall $B_s^0 \rightarrow \phi \phi$ über den Pinguinprozess}% \\ (rechts) Schematischer Zerfall $B_s^0 \rightarrow K^+K^-K^+K^-$ mit Primärvertex (PV) und Sekundärvertex (SV)}
+\label{fig:schema}
+\end{figure} 
+
+
+Der Masseneigenzustand des $B_s^0$-Mesons besteht aus einer Überlagerung der zwei Masseneigenzustände  $\ket{B_H}$ und $\ket{B_L}$, die sich in ihrer Lebensdauer $\tau_{B_H}$ und $\tau_{B_L}$ unterscheiden. Die Koeffizienten der Zusammensetzung der Masseneigenzustände ist abhängig von den Zerfallsprodukten und deren CP-Eigenzuständen.
+
+
+\newpage
+\section{LHCb-Experiment}
+Abbildung \ref{mapcern} zeigt eine schematische Darstellung des Large Hadron Collider (LHC) am CERN, der Europäischen Organisation für Kernforschung, in Genf. Auf einer Umlaufbahn von 27 km sind in den Jahren 2011 und 2012 Protonen bei einer Schwerpunktsenergie $\sqrt{s}=7\;$TeV und $\sqrt{s}=8\;$TeV zur Kollision gebracht worden. LHCb ist eines der vier großen Detektorsysteme am LHC und analysiert Zerfälle von Teilchen mit b- und c-Quarks, die sich durch ihre relativ lange mittlere Zerfallszeit für zeitaufgelöste Messung eignen.%einer Pikosekunde besitzen und sich so hervorragend frdurch den Sekundärvertex auszeichnen, der deutlich vom Primärvertex auflöst ist.  
+
+\begin{figure}[h!]
+	\centering
+  \includegraphics[width=9cm]{CERNMap.jpg}
+	\caption{Geographische Übersicht über die am Large Hadron Collider durchgeführten Experimente ATLAS, ALICE, CMS und LHCb \cite{cernmap}}
+\label{mapcern}
+\end{figure}
+
+\subsection{Ziele}
+Das Standardmodell der Teilchenphysik beschreibt präzise die Wechselwirkung der Elementarteilchen. Allerdings zeigen einige Phänomene, wie zum Beispiel die Baryonenasymmetrie, dass es Neue Physik geben könnte. Um minimale Abweichungen registrieren zu können, müssen die theoretischen Vorher-sagen präzise überprüft werden. 
+LHCb misst zahlreiche Parameter des Standard-modells - unter anderem auch die vorhergesagte CP-Verletzung in B- und D-Systemen.
+
+
+\subsection{Aufbau und Funktionsweise}
+Ein Detektor der Teilchenphysik hat die Aufgabe, Teilchen zu erkennen und deren Spuren korrekt zu rekonstruieren. B-Mesonen entstehen hauptsächlich unter hohen Impulsen in kleinen Winkeln zur Strahlachse in z-Richtung. Daher ist der LHCb-Detektor, den Abbildung \ref{lhcbforward} im Querschnitt zeigt, als Vorwärts-spektrometer mit einer Winkelakzeptanz von bis zu 250 mrad gebaut \cite{SISSA2008}. 
+
+\begin{figure}[h!]
+	\centering
+  \includegraphics[width=12cm]{600px-Lhcbview.jpg}
+\label{lhcbforward}
+	\caption{Schematischer Querschnitt des LHCb-Detektors mit seinen Subdetektoren. Von links nach rechts: Vertex-Locator (VELO), Cherenkov-Detektor 1 (RICH1), Tracker Turicensis (TT), Magnet, Hauptspurkammern (T1-T3), RICH2, Muonkammer M1, Scintillation Pad Detector (SPD), Pre-Shower Detector (PS), elektromagnetisches (ECAL) und hadronisches Kalorimeter (HCAL), Muonkammern (M2-M5) \cite{lhcbview}}
+\end{figure}
+
+Der LHCb-Detektor besteht aus Spurdetektoren, die die Spuren und Impulse von erzeugten Teilchen bestimmen und Detektoren zur Teilchenidentifikation. 
+
+\subsubsection{Spurdetektoren}
+Um Teilchenspuren zu rekonstruieren, werden Informationen aus dem Vertex-Locator (VELO), dem Tracker Turicensis (TT) und den drei Hauptspurkammern (T1-T3) benutzt. Zwischen dem VELO und den Hauptspurkammern steht ein Magnet mit integrierter Feldstärke von $\int Bdl = 4,2$ Tm, welcher geladene Teilchen auf Grund der Lorentzkraft auf eine Kreisbahn zwingt. Durch Bestimmung ihrer Ablenkung wird so auf den Teilchenimpuls geschlossen \cite{SISSA2008}.
+
+
+\begin{itemize}
+\item \textbf{Vertex Locator (VELO)}  \cite{SISSA2008} - Im VELO liegt der Kollisionspunkt der Protonenpakete. Es ist ein Silizium-Streifendetektor, der aus zwei beweglichen Halbkreisenanordnungen besteht, um den Detektor bei der Strahl-initialisierung zu schützen. Der VELO kann bis auf 7 mm an die Strahlachse heranbewegt werden. Um Mehrfachstreuung zu unterdrücken, befinden sich die 21 zur Strahlachse parallel in z-Richtung gestaffelten Detektoren im Vakuum. In orthogonaler Richtung sind Streifen für Messungen der Winkelposition angeordnet sowie um die Strahlachse konzentrische Streifen für Messungen der radialen Position. Primärvertices können mit einer transversalen Auflösung von $12\;\text{$\mu$m}$ und in Strahlrichtung von $69\;\text{$\mu$m}$ \cite{veloperf} aufgelöst werden. 
+
+\item \textbf{Tracker Turicensis (TT)}  \cite{SISSA2008} - Der TT ist ein Siliziumstreifenzähler, der auch die Spuren von Teilchen misst, die auf Grund der hohen Ablenkung des Magneten nicht mehr die Hauptspurkammern erreichen. Durch die Ablenkung auf Grund des Streufeldes des Magneten können deren Impulse ermittelt werden.
+
+\item \textbf{Inner \& Outer Tracker (IT/OT)}  \cite{SISSA2008} - Direkt hinter dem Magneten befinden sich die drei Hauptspurkammern (T1-T3), die in drei Stationen die Koordinaten der Spuren nach dem Magnetfeld ermitteln, womit der Impuls berechnet wird. Außerdem lässt sich aus der Richtung der Ablenkung der Teilchenspur das Ladungsvorzeichen ablesen. Auf Grund des höheren Teilchenflusses in der Nähe der Strahlachse sind die Spurkammern in Inner Tracker (IT) und Outer Tracker (OT) unterteilt. Während der IT wie der TT aus Siliziumstreifendetektoren besteht, ist der OT aus Proportinalzählrohren aufgebaut.
+\end{itemize}
+
+\subsubsection{Detektoren zur Teilchenidentifikation}
+
+\begin{itemize}
+\item \textbf{Ring Cherenkov Detector (RICH)}  \cite{SISSA2008} - Fliegen Teilchen durch ein Medium mit einer Geschwindigkeit $v$, die höher ist als die Lichtgeschwindigkeit in diesem Medium, $c'=c/n$, mit Brechungsindex $n$, werden Photonen in einem Lichtkegel ausgesendet \cite{Cerenkov1937}. Im RICH werden diese Photonen über Spiegel auf Photodetektoren abgelenkt. Die Teilchengeschwindigkeit $\beta=v/c$ errechnet sich über den Öffnungswinkel $\theta$ des Lichtkegels: \[ \cos \theta = \frac{c'}{v}=\frac{1}{n \beta}.\] 
+Mit den Impulsinformationen kombiniert kann man Pionen oder Kaonen nur in einem gewissen Impulsintervall voneinander trennen. Um einen großen Impulsbereich von bis zu 100 GeV/c abzudecken, kommen drei verschiedene Brechungsmedien zum Einsatz, die in zwei RICH untergebracht sind. Vor dem Magnet befindet sich der RICH1 für Teilchen mit Impulsen bis zu 60 GeV/c mit einer dünnen Aerogelplatte und einem mit $C_4F_{10}$ gefülltem Gasvolumen als zweitem Brechungsmedium. Hinter den Spurkammern ist der RICH2 mit $CF_4$-Gas als Brechungsmedium aufgebaut.
+
+%\item \textbf{Scintillator Pad Detector / Pre-Shower Detektor (SPD/PS)} - Bevor die Teilchen in die Kalorimeter fliegen, misst der SPD die Energien von geladenen Teilchen, sodass zwischen Elektronen von Photonen unterscheidbar sind, bevor sie in der darauffolgenden 12mm Bleischicht Schauer auslösen, die der PS anschließend misst.% \cite{SISSA2008}
+
+\item \textbf{Elektromagnetisches Kalorimeter (ECAL)}  \cite{SISSA2008} - Im ECAL werden Elektronen und Photonen von Absorbern abgestoppt und anhand der durch Paarbildung oder Bremsstrahlung entstandenen Schauer deren Gesamtenergie $E_{ges}$ ermittelt. Dabei sind 2mm dicke Bleiplatten mit 4mm Szintillatormaterial, die durch Photomultiplier ausgelesen werden, abwechselnd gestaffelt. %Außerdem kann anhand der Bestimmung der Richtungen der Teilchenschauer eine Vorselektion des Ereignisses durchgeführt werden. 
+
+\item \textbf{Hadronisches Kalorimeter (HCAL)}  \cite{SISSA2008} - Das nach dem gleichen Prinzip funktionierende HCAL stoppt Hadronen wie Pionen, Kaonen und Protonen, die vom ECAL nicht gestoppt werden. Hier sind 16mm Eisenplatten mit 4mm Szintillatormaterial verbaut.
+
+\item \textbf{Muonkammern (M1-M5)}  \cite{SISSA2008} - Die Muonkammern bestehen aus Driftkammern. Im HCAL bilden alle Teilchen bis auf Muonen und in diesem Detektorsystem nicht zu detektierende Neutrinos Schauer. Um die Muonkammern vor hochenergetischem hadronischen Schauerteilchen zu schützen, befindet sich zwischen den Muonkammern jeweils eine 80cm Eisenplatte. In den Muonkammern wechselwirkende Teilchen sollten also nur noch Muonen sein. %M1 befindet sich noch vor dem Kalorimetersystem, während M2 bis M5 den letzten physischen Bestandteil des Detektors bilden.
+\end{itemize}
+
+%
+%\subsubsection{Trigger}
+%Um die Daten aus 10 Millionen Proton-Proton Kollisionen pro Sekunde sinnvoll zu verarbeiten, selektiert ein Entscheidungsalgorithmus, der sogenannte Trigger die besten Ereignisse heraus. Der Level Zero (L0) Trigger reduziert die 10MHz Frequenz auf ein 1MHz durch Auswahl eines hohen Transversalimpulses von Teilchen, die aus einem B-Zerfall stammen. Diese Richtungsinformationen können sehr schnell aus den Kalorimetern und Muonkammern auslesen werden. Außerdem wird im VELO vereinfacht der Sekundärvertex rekonstruiert und so Ereignisse mit einer Mehrzahl von Proton-Proton Kollisionen, die schwer zu rekonstruieren sind, ausgeschlossen.
+%
+%Im High Level Trigger (HLT) stehen die Informationen aus dem gesamten Detektor zur Verfügung, die die Frequenz in zwei Stufen auf geringe Vielfache von 10 kHz und letztlich 2kHz senken \cite{triggersystemTDR}  \cite{lhcfacts} 
+
+%Im HLT1 werden die L0 Kandidaten mit den Informationen aus den Spurdetektoren überprüft und der sog. Stoßparameter (Impact Parameter - IP), der ein Maß ist für die Wahrscheinlichkeit eines B-Ereignisses. Das $B_s^0$ mit seiner Lebensdauer von ca. 1.5 ps mehrere Millimeter geboostet weiterfliegt bis es zerfällt. Dabei markiert, wie in Abbildung \ref{fig:ip} zu sehen, der IP die Distanz des kürzesten Abstandes der Verlängerung der Spur aus dem Sekundärvertex zum Primärvertex. Die Signifikanz des IP ist dessen Verhältnis zu seiner Unsicherheit. 
+
+%\[IP_{sig}=\frac{IP}{\sigma_{IP}}\] 
+
+%\begin{figure}[h!]
+%	\centering
+ % \includegraphics[width=8cm]{eps/ip.jpg}%neu und selbst machen
+%	\caption{Definition des Stoßparameters (Impact Parameter - IP) [mit PP selbst machen]}
+%\label{fig:ip}
+%\end{figure}
+
+%Der Stoßparameter zu einem zweiten Primärvertex ($2^{nd}IP$) ist ein Maß für die Trennbarkeit von Primärvertices. \\HLT2 führt eine komplette Ereignisrekonstruktion mit den Informationen des VELO als Keimzelle der Rekonstruktion durch, wobei nach Sekundärvertexen gesucht wird. 
+
+
+
+
+\newpage
+\section{Analysestrategie}
+Das Ziel dieser Analyse ist es, die Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons mit \text{$B_s^0 \rightarrow \phi\phi$-}Zerfällen zu bestimmen. Nach dem natürlichen exponentiellen Zerfallsgesetz zerfallen Teilchen mit einer Zerfallsrate %$\frac{d \Gamma}{dt}$, welche in diesem Zerfallskanal mit dem Parameter der Lebensdauer $\tau_{B_s^0}\rightarrow \phi\phi$ bestimmt wird.
+\[\frac{d \Gamma_{B_s^0 \rightarrow \phi\phi}}{dt}(t) \propto e^{-\frac{t}{\tau_{B_s^0}}}, \] mit dem Parameter der Lebensdauer $\tau_{B_s^0}$. Diese Funktion wird an die gemessene Zerfallszeitverteilung der $B_s^0$-Signalkandidaten gefittet, um $\tau_{B_s^0}$ zu extrahieren. %Zusätzlich müssen jedoch auch Detektoreffekte beachtet werden. 
+Im Folgenden werden die einzelnen Schritte der Analyse erläutert:
+
+\begin{itemize}
+\item Aus rekonstruierten Zerfällen mit vier Kaonkandidaten werden $B_s^0$-Kandi-daten mit Schnitten auf relevante Parameter selektiert, um den Untergrund-anteil so gering wie möglich zu halten.% werden mit Schnitten auf bestimmte Parameter vorselektiert, sodass diese von einem $B_s^0$-Meson stammen können. Die Selektion der $B_s^0$-Kandidaten besteht aus multivariablen ereignisabhängigen Schnitten.%In einer Verteilung der invarianten Massen der $B_s^0$-Kandidaten werden Ereignisse außerhalb der angefitteten Massenglockenkurve als Untergrund angenommen.% und im Histogramm für den abschließenden Fit der Lebensdauer weniger stark als Signalereignisse gewichtet.
+%\item Teilchendetektorsystem können Ereignisse immer nur mit einer gewissen zeitlichen Auflösung darstellen. Da $B_s^0$-Mesonen eine makroskopisch messbarer Zerfallslänge haben, kann versucht werden, die Zeitauflösung aus Ereignissen aus Daten zu bestimmen, indem man $\phi$ aus dem Primärvertex, sog. falsche, prompte $\phi$, nimmt und deren Zerfallszeit bestimmt. Diese sollten laut Konstruktion eine echte Zerfallszeit von Null haben, die mit Auflösungseffekten des Detektors um Null verschmiert ist. Die Breite dieser Verteilung ist als Zeitauflösung des Detektors definiert.
+\item $B_s^0$-Signalkandidaten werden von Untergrundereignissen anhand der invarianten $K^+K^-K^+K^-$-Massenverteilung getrennt. 
+\item Die Zerfallszeit kann vom Detektor nicht beliebig genau gemessen werden, sondern hat eine endliche Genauigkeit. Diese wird als Zeitauflösung bezeichnet und kann mit simulierten Ereignissen und Ereignissen aus Daten bestimmt werden.
+\item Bei der angewandten Rekonstruktion und Selektion von Signal- und Untergrundereignissen werden auch kurzlebige Signalereignisse \text{ausgeschlossen}. Die Effizienz bei der Rekonstruktion und Selektion, die sogenannte Zeitakzeptanz, wird mit simulierten Ereignissen bestimmt.
+
+\item Die Lebensdauer $\tau_{B_s^0}$ wird mit einem auf Zeitakzeptanz und Zeitauflösung korrigierten Fit bestimmt. Anschließend werden die einfließenden systematischen Unsicherheiten überprüft.
+\end{itemize}
+Die Analyse wird gleichzeitig an den Datensätzen aus den Jahren 2011 und 2012 durchgeführt.
+
+
+\newpage
+\section{Rekonstruktion und Selektion der Signalereignisse}
+In diesem Kapitel wird die Rekonstruktion und Selektion der Ereignisse des Zerfalls $B_s^0 \rightarrow \phi \phi$ beschrieben. 
+
+Da im Detektor keine ungeladenen Teilchenspuren korrekt rekonstruiert werden können, ist diese Analyse auf $B_s^0 \rightarrow (\phi\rightarrow K^+K^-) (\phi\rightarrow K^+K^-)$ Zerfälle beschränkt. $\phi$-Mesonen zerfallen favorisiert in zwei geladene Kaonen \cite{PDG}.  %Danach wird eine Vorselektion für $B_s^0$-Signalkandidaten durchgeführt. Zum Trennen von $B_s^0$-Signalereignissen von Untergrundereignissen ist danach die von S. Benson durchgeführte multivariable Analyse beschrieben.
+
+%Die in dieser Analyse verwendeten Datensätze wurden in den Jahren 2011 und 2012 am LHCb-Detektor bei einer Schwerpunktsenergie $\sqrt{s}_{2011}=7$ TeV und $\sqrt{s}_{2012}=8$ TeV gesammelt und entsprechen einer integrierten Luminosität von $\mathcal{L}_{2011}= 1.1\;\text{fb}^{-1}$ und $\mathcal{L}_{2012}=2.0\;\text{fb}^{-1}$.
+
+Abbildung \ref{fig:schema2} skizziert den im Detektor rekonstruierten Zerfall. Der Primärvertex beschreibt die Koordinaten des Ortes $\vec{d}_{prim\ddot{a}r}$, an dem die Protonen kollidieren. Ein $B_s^0$-Meson zerfällt am Sekundärvertex $\vec{d}_{sekund\ddot{a}r}$ nach einer Weglänge |$\vec{d}$|$=|\vec{d}_{prim\ddot{a}r}-\vec{d}_{sekund\ddot{a}r}|$ in zwei sehr kurzlebige $\phi$-Mesonen. Deren Lebensdauer von $\tau_{\phi}=1.55 \cdot 10^{-22}$s \cite{PDG} kann nicht von LHCb zeitlich aufgelöst werden. Daher entstammen Kaonpaare, deren Spuren im Detektor rekonstruiert werden, unmittelbar dem Sekundärvertex.  %die bei der Rekonstruktion den Kaonen sehr ähnlich sind. %ref vorher
+\begin{figure}[h!]
+\centering
+    \subfigure{\includegraphics[width=0.79\textwidth]{eps/bs2KKKK.jpg}} 
+ \caption{Schematischer Zerfall $B_s^0 \rightarrow \phi \phi \rightarrow K^+K^-K^+K^-$ mit Primärvertex (PV) und Sekundärvertex (SV)}
+\label{fig:schema2}
+\end{figure}  
+
+
+\subsection{Definition der Variablen der Ereignisrekonstruktion}
+Um einen Zerfall zu selektieren, werden verschiedene kinematische Variablen mit Hilfe theoretischer Vorhersagen und simulierter Ereignisse auf typische Signalsignaturen untersucht. Einige dieser Variablen werden im den folgenden Unterkapiteln beschrieben.
+\subsubsection{Rekonstruktion der Zerfallszeit}
+Die rekonstruierte Zerfallszeit $t_{rek}$ im Ruhesystems des $B_s^0$-Mesons wird mit den vom Detektor gemessenen Größen der Zerfallslänge |$\vec{d}$|, des rekonstruierten Impulses $p$, der Geschwindigkeit $v$ (in natürlichen Einheiten mit $c=1$, $\beta=v/c$) und $\gamma=1/\sqrt{1-\beta^2}$ aus der Speziellen Relativitätstheorie wie folgt berechnet:
+\label{ch:bsphiphi}
+\begin{align*}
+&t_{rek}=\frac{d}{\gamma v}=\frac{d}{\gamma \beta}=\frac{md}{p}=\frac{m\vec{d}\cdot \vec{p}}{\vec{p}^2}
+\\ \Leftrightarrow&t_{rek}=\frac{m \; (\vec{d}_{sekund\ddot{a}r}-\vec{d}_{prim\ddot{a}r}) \cdot \vec{p}}{|\vec{p}|^2}.
+\end{align*}
+
+\subsubsection{$\chi^2$ der Spur- und Vertexrekonstruktion}
+Um Teilchenspuren zu rekonstruieren, werden Treffer in den Spurdetektoren mit einem Algorithmus zu Spuren rekonstruiert. Die Güte dieses Fits wird durch die Summe der Abstandsquadrate, dem Spur-$\chi^2$, zwischen gefitteter Spur und Treffer im Detektor und auf die Unsicherheit normiert bestimmt. %In Analysen wird auf den durch die Anzahl der freien Parameter geteilten reduzierten Parameter $\chi^2/nDof$ bei Vertex- und Spurrekonstruktion geschnitten.
+
+Der Punkt, an dem Teilchen zerfallen, wird Vertex genannt und wird durch den Schnittpunkt der entstehenden Teilchenspuren rekonstruiert. Die Güte dieser Bestimmung wird Vertex-$\chi^2$ genannt und beschreibt die Summe der Abstandsquadrate von Vertex zu Schnittpunktrekonstruktion, normiert auf die Unsicherheit. 
+
+Damit die Güte der Fits unabhängig von der Anzahl der eingehenden Messungen ist, wird der $\chi^2$-Wert durch die Anzahl der eingehenden Freiheitsgrade (number of degrees of freedom - $nDoF$) geteilt. 
+
+\subsubsection{Stoßparameter}
+%Ereignisse mit B-Mesonen sollen von 
+Ein großer Teil der Untergrundereignisse besteht aus Teilchen, die direkt am Primärvertex entstehen. Auf Grund der langen Lebensdauer des $B_s^0$-Mesons kann der Sekundärvertex, wie in Abbildung \ref{fig:ip} und \ref{fig:schema2} dargestellt wird, aufgelöst werden. Aus der Spur von Zerfallsteilchen kann der sogenannte Stoßparameter (Impact Parameter - IP) berechnet werden. Abbildung \ref{fig:ip} definiert den Stoßparameter als die Distanz des kürzesten Abstandes der Verlängerung der Spur aus dem Sekundärvertex zum Primärvertex. Das Verhältnis des IP zur Vorhersage der durch den Rekonstruktionsalgorithmus angegebenen Unsicherheit beschreibt die Signifikanz des IP,
+\[IP_{sig}=\frac{IP}{\sigma_{IP}}.\]
+Teilchen aus dem Primärvertex besitzen einen kleinen IP. Primärvertices werden ohne die Spur des $B_s^0$-Mesons aus den Teilchenspuren der Proton-Proton-Kollision. Sind mehrere Primärvertices vorhanden, kann die Zerfallslänge des $B_s^0$-Mesons nicht eindeutig zugeordnet werden. Einem $B_s^0$-Meson wird der  Primärvertex mit dem geringsten rekonstruierten IP zugeordnet. Der Stoßparameter zum zweitbesten Primärvertex ($2^{nd}IP$) ist ein Maß, um die sichere Zuordnung zum Primärvertex zu überprüfen.%wie ausführlicher
+
+\begin{figure}[h!]
+	\centering
+  \subfigure{\includegraphics[width=0.69\textwidth]{eps/ip.jpg}}
+%  \subfigure{\includegraphics[width=0.49\textwidth]{eps/angle.jpg}}
+ 	\caption{Definition des Stoßparameters (IP) als kürzeste Distanz zwischen Primärvertex (PV) und durch den Sekundärvertex (SV) verlängerten Teilchenspur des Kaons}
+\label{fig:ip}
+\end{figure}
+
+%\subfigure[Definition des Stoßparameters (Impact Parameter - IP) als kürzestes Distanz zwischen Primärvertex (PV) und der durch den Sekundärvertex (SV) verlängerten Teilchenspur des Kaons]{\includegraphics[width=0.49\textwidth]{eps/ip.jpg}}
+%  \subfigure[Definition des Winkels $\angle(\vec{p_{B_s^0}},\vec{d})$ zwischen dem Teilchenimpuls $\vec{p_{B_s^0}}$ und der Flugrichtung vom besten Primärvertex zum Sekundärvertex $\vec{d}$]{\includegraphics[width=0.49\textwidth]{eps/ip.jpg}}
+
+
+\subsubsection{Teilchenidentifikation}
+Die Informationen aus RICH, Kalorimetern und Muonkammern werden genutzt, um die Wahrscheinlichkeit $\mathcal{L} (\pi, \mu \; \text{oder} \; K)$ abzuschätzen, ob es sich bei dem detektierten Teilchen um ein Pion, Muon oder Kaon handelt. Da die meisten in Proton-Proton-Kollisionen entstehenden Teilchen Pionen sind, wird die Differenz der logarithmierten Wahrscheinlichkeit (difference of the logarithmic likelihood - DLL) für ein Teilchen X und einem Pion $\pi$ als relative Teilchenhypothese angegeben: \[\Delta \ln \mathcal{L}_{X-\pi}=\ln \mathcal{L}(X)-\ln \mathcal{L}(\pi).\]
+Die Wahrscheinlichkeit, dass es sich bei einer rekonstruierten Spur um die eines Kaons handelt, kann auch mittels Bildung eines neuronalen Netzes berechnet werden. Die verwendete Variable \textit{ProbNNK} ist die Ausgabevariable des neuronalen Netzalgorithmus zur Teilchenidentifikation und gibt die Wahrscheinlichkeit an, dass es sich um ein Kaon handelt.
+
+\subsubsection{Kegelasymmetrie des Transversalimpulses}
+Um die Kegelasymmetrie des Transversalimpulses ($p_T$ cone asymmetry) zu bestimmen, wird um jeweils eine Kaonspur ein Kegel mit Öffnungswinkel 1 rad konstruiert. Als Kegelasymmetrie des Transversalimpulses ist die Differenz des Transversalimpulses dieses einen Kaons zu allen anderen Transversalimpulsen innerhalb dieses Kegels definiert. Dabei weisen Kaonen eines Untergrundereignisses eher negative Werte der Transversalimpuls-Kegelasymmetrie auf.
+
+%The pT cone asymmetry for each kaon track, which is dened to be the dierence between the pT of the signal track and the sum pT of the other tracks in a cone of radius 1 rad centred on the signal track.
+
+\subsection{Rekonstruktion und Selektion des Zerfalls $B_s^0 \rightarrow \phi\phi$}
+%Abbildung \ref{fig:schema2} skizziert den im Detektor rekonstruierten Zerfall. Der Primärvertex beschreibt die Koordinaten des Ortes, an dem die Protonen kollidieren. Nach einer Weglänge |$\vec{d}$| zerfällt ein $B_s^0$ am Sekundärvertex in |$\vec{d}$|$=|\vec{d}_{prim\ddot{a}r}-\vec{d}_{sekund\ddot{a}r}|$ in beide $\phi$. Diese sehr kurzlebigen Teilchen mit einer Lebensdauer von $\tau_{\phi}=1.55 \cdot 10^{-22}\;s$  \cite{PDG} zerfallen weit unterhalb der Auflösung von LHCb in Kaonpaare, deren Spuren im Detektor rekonstruiert werden. Eine Herausforderung für die Rekonstruktion ist die Unterscheidung zwischen Kaonen und Pionen, da sie sehr ähnliche Eigenschaften besitzen. %die bei der Rekonstruktion den Kaonen sehr ähnlich sind. %ref vorher
+%\begin{figure}[h!]
+%\centering
+%    \subfigure{\includegraphics[width=0.49\textwidth]{eps/bs2KKKK.jpg}} 
+% \caption{Schematischer Zerfall $B_s^0 \rightarrow K^+K^-K^+K^-$ mit Primärvertex (PV) und Sekundärvertex (SV)}
+%\label{fig:schema2}
+%\end{figure}  
+
+Um den Zerfall $B_s^0 \rightarrow \phi\phi$ zu rekonstruieren, werden vier Kaonspuren gesucht, von denen jeweils zwei Kaonen unterschiedlicher Ladung mit entsprechender Masse aus dem gleichen Vertex zu einem $\phi$-Meson kombiniert werden. Eine Herausforderung für die Rekonstruktion ist die Unterscheidung zwischen Kaonen und Pionen, da sie sehr ähnliche Eigenschaften besitzen. Zwei dieser $\phi$-Mesonen bilden einen $B_s^0$-Kandidaten. Untergrundereignisse, bei denen Kaonen direkt am Primärvertex entstehen, sollen nicht selektiert werden. Im Folgenden werden die angewandten Selektionsschnitte beschrieben. 
+
+\subsubsection{$\phi$-Rekonstruktion und -Selektion}
+
+Um Untergrundereignisse zu unterdrücken, wird auf die Stoßparameter der beiden Kaonenspuren eines $\phi$-Mesons mit IP-$\chi^2(K)$ größer als 2,5 geschnitten, sodass sie nicht aus dem Primärvertex stammen. 
+Es wird auf die Spurrekonstruktion der Kaonen mit Spur-$\chi^2/nDoF$ kleiner als 4 geschnitten. %Dieser Schnitt ist nahe an Wert des Standardschnitts bei Spurrekonstruktionen von LHCb, welcher beim Datensatz aus 2012 höher ist als bei dem aus 2012. 
+Durch diesen Schnitt treten keine signifikanten Veränderungen der Selektion auf. Er dient der Angleichung der Ereignisse aus den Jahren 2011 und 2012, da während der Spurrekonstruktion 2012 der Standardschnitt von $\chi^2/nDoF$ kleiner als 3 implementiert war. 2011 lag der Standardschnitt bei 5, allerdings wurde auch die Art der $\chi^2$-Berechnung verändert, sodass der Schnitt von 2012 effektiv härter ist. 
+
+
+Um ein $\phi$-Meson zu rekonstruieren, werden zwei Kaonen mit einem Transversalimpuls $p_T(K)$ größer als 400 MeV/c kombiniert, da Zerfallsprodukte aus dem Primärvertex gewöhnlich einen kleinen Transversalimpuls haben. Ein hoher Transversalimpuls eines Kaons deutet auf einen Zerfall von einem schweren Teilchen, wie dem $B_s^0$, hin, da die Massendifferenz zu den Zerfallsteilchen in kinetische Energie isotrop abgegeben wird. 
+
+Mit der Güte des Fits am $\phi$-Vertex, $\chi^2/nDoF$ größer als 15, wird bei der Rekonstruktion des $\phi$-Vertex gewährleistet, dass die Kaonen aus dem selben Punkt stammen. 
+Die Hypothese, die Teilchen als Kaon zu identifizieren, ist mit $\Delta \ln \mathcal{L}_{K-\pi}$ kleiner als -5 schwach.
+
+Für den Transversalimpuls eines $\phi$-Mesons wird $p_T(\phi)$ größer als 900 MeV/c verlangt. Das Produkt der beiden $\phi$-Transversalimpulse $p_{T}(\phi_1)\cdot p_{T}(\phi_2)$ wird größer 2 GeV$^2$/c$^2$ gefordert. Als invariante Masse der beiden Kaonen werden $\phi$-Mesonen in ein Massenfenster von $\pm$25 MeV/c$^2$ um die $\phi$-PDG-Masse $m_{\phi}^{PDG}=1019.455$ MeV/c$^2$ \cite{PDG} selektiert.
+
+ 
+\subsubsection{$B_s^0$-Rekonstruktion und -Selektion}
+Das $B_s^0$-Meson wird in diesem Zerfallskanal aus zwei $\phi$-Mesonen mit einem Vertex-$\chi^2/nDoF$ kleiner als 15 rekonstruiert. 
+
+Die angewandten Schnitte der Vorselektion, die in Tabelle \ref{table:cutssignal} zusammengefasst werden, entstammen der CP-Analyse in diesem Zerfallskanal von S. Benson, University of Edinburgh \cite{BensonANANOTE}.
+
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c} 
+Parameter & Wert\tabularnewline
+\hline 
+Spur IP $\chi^2$ (K)  & > 2.5 \tabularnewline
+Spur $\chi^2$/nDoF (K)  & < 4  \tabularnewline 
+$p_T (K) $ & > 400 MeV/c \tabularnewline
+%$ 2^{nd} IP^2_{sig}(B_s^0) $ & > 2500 \tabularnewline
+$\Delta \ln \mathcal{L}_{K-\pi} $ & < -5 \tabularnewline 
+$|m_{KK}-m^{PDG}_{\phi}| $ & < 25 $MeV/c^2$ \tabularnewline
+$p_T (\phi) $ & < 900 MeV/c \tabularnewline
+$p_{T}(\phi_1)\cdot p_{T}(\phi_2)$ & > 2000 MeV$^2$/c$^2$\tabularnewline 
+Vertex $\chi^2/nDoF  (\phi) $ &  < 15 \tabularnewline
+%Spur $\chi^2/nDoF  (K) $ & < 4 \tabularnewline
+Vertex $ \chi^2/nDoF  (B_s^0) $ & < 15\tabularnewline
+
+\end{tabular}
+\par\end{centering}
+\caption{Übersicht der Schnitte auf die Parameter der Vorselektion von Ereignissen mit $B_s^0$-Kandidaten}
+\label{table:cutssignal}
+\end{table}
+
+\subsubsection{Ereignisselektion für die Bestimmung der Lebensdauer}% $B_s^0 \rightarrow \phi \phi$}
+%\subsubsection{Ereignisse für die Bestimmung der Lebensdauer}
+Nach der soeben beschriebenen Vorselektion ist der Untergrundanteil groß. Härtere Selektionsschnitte führen jedoch zu Verlust von Signalereignissen. Deshalb wurde von S. Benson \cite{BensonANANOTE} eine multivariable Analyse (MVA) durchgeführt, bei der ereignisabhängig selektiert wird. Dafür werden simulierte $B_s^0 \rightarrow \phi \phi$ Signalzerfälle auf typische Ereignissignaturen untersucht und mit kombinatorischem Untergrund aus den Seitenbändern des $B_s^0$-Signalpeaks aus Daten verglichen. Signal bezeichnet Ereignisse von $B_s^0$-Kandidaten, die korrekt aus ihren Zerfallsprodukten rekonstruiert werden. Der Datensatz, auf den die MVA angewandt wurde, wurde von S. Benson zur Verfügung gestellt. 
+
+Die Selektion wurde auf die Bewertungskennziffer % (figure of merit) 
+$N_{Sig}/\sqrt{N_{Sig}+N_{Unt}}$, mit $N_{Sig}$ der Anzahl der Signalkandidaten und $N_{Unt}$ der Anzahl der Untergrundereignisse, optimiert. Die weitere Filterung der Ereignisse erfolgte auf den folgenden Parametern:  
+\begin{itemize}
+  \item Transversalimpuls $p_T$ des $B_s^0$-Kandidaten, der $\phi$-Kandidaten und der kleinste sowie der größste Transversalimpuls der vier Kaonkandidaten 
+  \item Pseudorapidität des $B_s^0$-Kandidaten $\eta$, der $\phi$-Kandidaten und die kleinste sowie die größste Pseudorapidität der vier Kaonkandidaten 
+  \item Das reduzierte $\chi^2/nDoF$ des Sekundärvertex des $B_s^0$-Kandidaten 
+  \item Der Kosinus des Winkels $\alpha=\angle(\vec{p}_{B_s^0},\vec{d})$ zwischen dem Impuls des $B_s^0$-Mesons $\vec{p}_{B_s^0}$ und der Verbindungslinie zwischen dem besten Primärvertex und dem Sekundärvertex $\vec{d}$ %nicht verstanden
+  \item Das größte Spur-$\chi^2/nDoF\;(K)$ der Rekonstruktion der vier Kaonkandidaten 
+  \item Transversalimpuls-Kegelasymmetrie für jede Spur der Kaonkandidaten
+  \item Minimale Kaonwahrscheinlichkeit, wobei die Variable \textit{ProbNNK} benutzt wurde
+\end{itemize}
+
+%Als Untergrund wurden Ereignisse angenommen, die die invariante Masse von vier Kaonen mit einem Massenabstand von 120 MeV/c$^2$ zur im PDG gelisteten $B_s^0$-Masseaufweisen.  (STIMMT DOCH NICHT, habe ich aber aus der ANA NOTE) ??was quoten wir als Bs-Masse?? \cite{PDG}
+
+
+%\subsubsection{simulierte Ereignisse für die Lebenszeitmessung}
+%Die gleiche Selektion ist auf simulierte Ereignisse angewandt. Der einzigen Unterschied ist dabei, dass in Simulationen echte $B_s^0$ korrekt rekonstruiert sind. Die multivariable Analyse ist von S. Benson durchgeführt und durch persönliche Mitteilung erhalten worden.
+
+
+%\subsubsection{Bestimmung des Signals anhand der Massenverteilung von Ereignissen aus Daten}
+
+\subsubsection[Invariante Massenverteilung der selektierten $\phi$- und $B_s^0$-Signalkandidaten nach Anwendung der MVA]{Invariante Massenverteilung der selektierten $\phi$- und $B_s^0$-Signal-kandidaten nach Anwendung der MVA}
+\label{ch:massmodell}
+Abbildung \ref{fig:mphi} zeigt die Verteilungen der invarianten $K^+K^-$-Masse der $\phi$-Kandidaten vor und nach der Anwendung der MVA. Durch Anwendung der multivariablen Analyse (MVA) ist der Anteil an Untergrund-Ereignissen im Vergleich zu Signalereignissen stark gesunken. Die Verteilungen der invarianten $K^+K^-$-Masse weisen einen kleinen Peak der $\phi$-Masse auf.
+
+\begin{figure}[h!]
+\centering
+    \subfigure[vor Anwendung der MVA, 2011]{\includegraphics[width=0.49\textwidth]{eps/phimass_Bs2PhiPhi_data_vorBDT_2011.eps}}
+    \subfigure[vor Anwendung der MVA, 2012]{\includegraphics[width=0.49\textwidth]{eps/phimass_Bs2PhiPhi_data_vorBDT_2012.eps}}
+    \subfigure[nach Anwendung der MVA, 2011]{\includegraphics[width=0.49\textwidth]{eps/phimass_Bs2PhiPhi_data_2011.eps}}
+    \subfigure[nach Anwendung der MVA, 2012]{\includegraphics[width=0.49\textwidth]{eps/phimass_Bs2PhiPhi_data_2012.eps}}
+\caption{Verteilung der invarianten $K^+K^-$-Masse der $\phi$-Kandidaten von $B_s^0$-Signalkandidaten aus Daten 2011 (links) und 2012 (rechts)}
+\label{fig:mphi}
+\end{figure} 
+
+Aus zwei dieser $\phi$-Mesonen wird ein $B_s^0$-Meson kombiniert. Abbildung \ref{fig:datasignalmass} zeigt eine fast vollständig vom Untergrund getrennte Verteilung der invarianten $K^+K^-K^+K^-$-Masse. Sie wird durch die Summe $\mathcal{M}$ von zwei Gaußfunktionen mit gemeinsamen Erwartungswert $\mu_M$, mit Gaußbreiten $\sigma_{1,M}$ und $\sigma_{2,M}$  sowie dem Verhältnis der Gaußbreiten $f$ beschrieben, wobei der Untergrund mit einer linearen Funktion mit Steigung $a$ und Achsenabschnitt $b$ modelliert wird:
+\begin{align*}
+\mathcal{M}(m;N_{Sig},\mu_M,\sigma_{1,M},\sigma_{2,M},f,N_{Unt},a,b)&=N_{Sig} \big( f \frac{1}{\sqrt{2 \pi} \sigma_{1,M}} \exp(-{\frac{(m-\mu_M)^2}{2 \sigma_{1,M}^2}})\\&+(1-f)\frac{1}{\sqrt{2 \pi} \sigma_{2,M}} \exp(-{\frac{(m-\mu_M)^2}{2 \sigma_{2,M}^2}}) \big)\\&+N_{Unt}(a \cdot m+b). 
+\end{align*}
+Abbildung \ref{fig:datasignalmass} zeigt den Untergrund in rot und das Signal in blau. In der Beschreibung des Untergrunds in Daten aus 2011 wurde der Parameter zu $a$=0 festgesetzt, damit der Fit konvergiert. Die Ergebnisse der Fitparameter werden in Tabelle \ref{table:datasignalmass} aufgelistet. Es werden 1139$\pm$38 Signalkandidaten in 2011 bzw. 2668$\pm$62 in 2012 gefunden.
+
+\begin{figure}[h!]
+\centering
+    \subfigure{\includegraphics[width=0.49\textwidth]{eps/roo_signal_massfit_2011.eps}}
+    \subfigure{\includegraphics[width=0.49\textwidth]{eps/roo_signal_massfit_2012.eps}}
+ \caption{Verteilung der invarianten $K^+K^-K^+K^-$-Masse und Fit in Signalanteil (dunkelblau) und Untergrundanteil (rot) der Ereignissen von $B_s^0$-Signalkandidaten von Daten 2011 (links) und 2012 (rechts)}
+\label{fig:datasignalmass}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+$\mu_M$ [MeV/c$^2$]& 5372.62$\pm$ 0.49& 5371.46 $\pm$ 0.34 \tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_{1,M}$ [MeV/c$^2$] & 11.11 $\pm$ 1.82& 12.82 $\pm$ 2.27 \tabularnewline
+$\sigma_{2,M}$ [MeV/c$^2$] & 21.34 $\pm$ 3.84& 20.87 $\pm$ 5.34 \tabularnewline
+$f$ & 0.48 $\pm$ 0.21& 0.61 $\pm$ 0.03 \tabularnewline
+$a$ & 0 (fixiert) & 0.55 $\pm$ 0.07\tabularnewline
+$b$ [MeV/c$^2$]& 1.20 $\pm$ 0.08 & 2601$\pm$ 311 \tabularnewline
+$N_{Sig}$ & 1139 $\pm$ 38& 2668 $\pm$ 62 \tabularnewline
+$N_{Unt}$ & 127$\pm$ 21& 545 $\pm$ 41 \tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 105.6/44 & 55230 $\pm$ 234\tabularnewline
+%\hline
+%$\sigma_{gesamt}$ & 0.048897 $\pm$ 0.001711 & 55230 $\pm$ 234\tabularnewline
+\end{tabular}
+\par\end{centering}
+\caption{Übersicht der Ergebnisse der Parameter aus dem Fit an die Verteilung der invarianten $K^+K^-K^+K^-$-Masse der $B_s^0$-Kandidaten in Signal und Untergrund aus Daten 2011 und 2012}
+\label{table:datasignalmass}
+\end{table}
+
+
+\subsection{Umgewichten der $B_s^0$-Signalkandidaten von Daten} \label{sweighting}
+Um die Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons  korrekt zu bestimmen, müssen Signal- und Untergrundkandidaten möglichst präzise voneinander separiert sein, da der Fit des Lebensdauermodells nur an echte $B_s^0$-Ereignisse erfolgen soll. Abbildung \ref{fig:datasignalmass}, die Verteilung der invarianten $K^+K^-K^+K^-$-Masse, zeigt nach der Vorselektion und der multivariablen Analyse noch ein Anteil an Untergrundereignissen.
+
+Aufgrund des Massenfits wird jedem Ereignis mittels der $_s\mathcal{P}$lot-Methode \cite{sweight} je nach der Wahrscheinlichkeit ein Signalereignis zu sein, ein Gewicht zugeordnet. Liegt das Ereignis im Bereich der invarianten Masse des $B_s^0$-Mesons, so ist das Gewicht positiv. Liegt es außerhalb, so handelt es sich um ein Untergrundereignis und das Gewicht ist negativ.
+
+Die Verteilung der Gewichte, mit denen die Histogramme der Zerfallszeit der $B_s^0$-Kandidaten für den Lebensdauerfit im Kapitel \ref{ch:fit} gefüllt werden, zeigt Abbildung \ref{fig:sweights}.
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_sWeight_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_sWeight_2012.eps}}
+\caption{Gewichtungsverteilung der $_s\mathcal{P}$lot-Methode von $B_s^0$-Signalkandidaten aus Daten 2011 (links) und 2012 (rechts)}
+\label{fig:sweights}
+\end{figure} 
+
+
+\newpage
+\section{Bestimmung der Zeitauflösung}
+In diesem Kapitel wird die zeitliche Auflösung des Detektors für die Zerfallszeit der selektierten $B_s^0$-Signalkandidaten bestimmt. Die Zerfallszeit kann vom Detektor nur mit einer endlichen Auflösung bestimmt werden. Die Zeitauflösung ist ein Maß, welches die Genauigkeit der Messung von Zerfallszeiten im Detektor angibt. Sie beschreibt das Verschmieren der Zerfallszeitverteilung und ist nötig, um die Lebensdauer korrekt zu bestimmen.
+
+Die Zeitauflösung ist definiert als die Verteilung der Abweichung von rekonstruierter und echter Zerfallszeit:
+ \[\Delta t=t_{rek}-t_{echt}.\]
+Die Zeitauflösung kann sowohl aus simulierten Ereignissen als auch mit Ereignissen aus Daten ermittelt werden. In simulierten Ereignissen ist die echte Zerfallszeit bekannt. Dies ist bei Ereignissen aus Daten nicht möglich. Eine Möglichkeit ist es, die Zerfallszeit von kinematisch ähnlichen Zerfallsteilchen, die direkt aus dem Primärvertex stammen und damit eine echte Zerfallszeit $t_{echt}=0$ ps haben, zu untersuchen. Prompte $\phi$-Mesonen mimen ein promptes $B_s^0\rightarrow\phi\phi$-Meson aus dem Primärvertex, ein sogenanntes Pseudo-$B_s^0$-Meson, welches keine Zerfallslänge besitzt und so per Definition eine echte Zerfallszeit von $t_{echt}=0$ ps aufweist.
+
+
+\subsection{Selektion der Ereignisse prompter Pseudo-$B_s^0$-Mesonen für die Bestimmung der Zeitauflösung}
+\label{ch:selphi}
+Die Selektion von zwei $\phi$-Mesonen, sogenannten prompten $\phi$, die direkt am Primärvertex produziert werden, ist bisher für keine andere LHCb-Analyse relevant gewesen. Daher sind die Daten nicht speziell für solche Ereignisse aufbereitet worden und nur eingeschränkt verwendbar. Es liegen nur Ereignisse vor, bei denen neben den beiden $\phi$-Mesonen zufällig ein langlebiger Zerfall aus der selben Kollision rekonstruiert wurde, sodass die Anzahl der gesuchten Ereignisse an $\phi$-Mesonen aus dem Primärvertex klein ist. Daher müssen die Selektionsschnitte sehr weich gesetzt werden. Dies führt zwangsläufig zu vielen Untergrundereignissen, die aber kinematisch den gesuchten Ereignissen sehr ähnlich sind. 
+
+Die Analyse der Zeitauflösung mittels prompter $\phi$-Mesonen wird mit simulierten Ereignissen überprüft und mit $\phi$-Kandidaten aus Daten durchgeführt. Im Folgenden werden die unterschiedlich zur $B_s^0$-Signalereignissen angewandten Selektionsschnitte beschrieben:
+
+Es wird kein Schnitt auf den Stoßparameter (IP) der Kaonspuren angewandt, da ausdrücklich nach prompten $\phi$ aus dem Primärvertex mit idealem Stoßparameter $IP=0$ für die Bestimmung der Zeitauflösung gesucht wird. %Stattdessen wird auf dessen Spurrekonstruktion mit $\chi^2/nDoF$ größer 4 geschnitten. Dieser Schnitt ist nahe an Wert des Standardschnitts bei Spurrekonstruktionen von LHCb, welcher beim Datensatz aus 2012 und höher ist als bei dem aus 2012. Der in der Analyse angewandte Schnitt keinen großen Effekt auf die Selektion.  
+Um die Rekonstruktion langlebiger Teilchen aus Kollisionen mit fehlerhaft zugewiesenem Primärvertex zu unterdrücken, wird auf den Stoßparameter zum zweitbesten Primärvertex, den 2$^{nd}$ IP, geschnitten. Der ursprüngliche Datensatz enthält somit auch Signalereignisse, welche mit dem Schnitt auf negative Zerfallszeiten, wegfallen. 
+%In simulierten Ereignissen wurde desweiteren gefordert, dass es sich nicht um das assoziierte simulierte Ereignisse Teilchen, das sog. assoziierte MCP, handelt. 
+
+Zur Erhöhung der Anzahl von simulierten Ereignissen wird das Massen-fenster der zwei Kaonen um die $\phi$-Masse vergrößert.
+
+Tabelle \ref{table:prompteschnitte} zeigt die im Vergleich zur Selektion der $B_s^0$-Signalkandidaten veränderten Schnitte für die Selektion von zwei prompten $\phi$-Mesonen, die ein Pseudo-$B_s^0$-Meson \text{mimen}. Die angewandten Schnitte sind für die Datensätze aus den Jahren 2011 und 2012 identisch. 
+%Die daraus resultierende Statistik ist in Tabelle \ref{table:promptestatistik} zusammengefasst. 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c} 
+Parameter & Wert Simulation & Wert Ereignisse aus Daten\tabularnewline
+\hline 
+%Vertex $ \chi^2/nDoF  (B_s^0) $ & < 15& < 15\tabularnewline
+
+%$|m_{\phi\phi}-m^{PDG}_{B_s^0}| $ & < 50 MeV& < 50 MeV \tabularnewline 
+%$p_t (\phi) $ & > 900 MeV& > 900 MeV \tabularnewline
+%$p_{\phi 1,t}\cdot p_{\phi 2,t}$ & > 2000 MeV& > 2000 MeV\tabularnewline 
+Spur IP $\chi^2$ (K)  & > 0 & > 0 \tabularnewline
+%Spur $\chi^2/nDoF  (K) $ & < 4& < 4 \tabularnewline 
+%$p_t (K) $ & > 400 MeV& > 400 MeV \tabularnewline
+%$\Delta \ln \mathcal{L}_{K-\pi} $ & < -5& < -5 \tabularnewline
+$ 2^{nd} IP^2_{sig}(B_s^0) $ & > 2500& > 2500 \tabularnewline 
+%Vertex $\chi^2/nDoF  (\phi) $ &  < 15 &  < 15 \tabularnewline 
+$|m_{KK}-m^{PDG}_{\phi}| $ & < 50 MeV/c$^2$& < 15 MeV/c$^2$ \tabularnewline
+Zerfallszeit $t_{Zerfall}$ & < 0 ps& < 0 ps \tabularnewline 
+%\hline
+%assoziiertes MCP($B_s^0$) & false & - \tabularnewline 
+\end{tabular}
+\par\end{centering}
+\caption{Übersicht der unterschiedlichen Schnitte für die Selektion von zwei prompten $\phi$-Mesonen, die ein promptes Pseudo-$B_s^0\rightarrow\phi\phi$-Meson mimen}% zu $B_s^0$-Signalereignissen auf simulierte Ereignisse prompter $\phi$ und prompte $\phi$-Kandidaten aus Daten 2011 und 2012}
+\label{table:prompteschnitte}
+\end{table}
+
+%
+%\begin{table}[h!]
+%\noindent \begin{centering}
+%\begin{tabular}{c|c|c|c}
+%Selektion&Jahr&simulierte Ereignisse&Daten\tabularnewline
+%\hline 
+%$\phi\phi$-Ereignisse&2011&395.106 Ereignisse&1.414.863 Ereignisse\tabularnewline
+%Vorselektion&2011&21.202 Ereignisse&108.947 Ereignisse\tabularnewline
+%Selektion $\tau$<0&2011&1.403 Ereignisse&41.954 Ereignisse\tabularnewline
+%\hline
+%$\phi\phi$-Ereignisse&2012&317.493 Ereignisse&8.851.111 Ereignisse\tabularnewline
+%Vorselektion&2012&24.383 Ereignisse&216.916 Ereignisse\tabularnewline
+%Anzahl $\tau$<0&2012&1.703 Ereignisse&81.947 Ereignisse\tabularnewline
+% \end{tabular}
+%\par \end{centering}
+%\vspace{-2mm}
+%\caption{Übersicht der Entwicklung der Anzahl der Ereignisse mit prompten $\phi$ aus simulierten Ereignissen und Daten durch die angewandten Schnitte}
+%\label{table:promptestatistik}
+%\end{table}
+
+%Da nicht stark auf Pion-Kaon-Unterscheidung geschnitten wurde um höhere Statistik zu erhalten, ist in Ereignissen auf Daten mit negativer Zerfallszeit in der $\phi$-Massenverteilung in Abbildung \ref{fig:promptphimass} ein großer Untergrund im Bereich um den Erwartungswert der $\phi$-Masse bei $m^{PDG}_{\phi}=1019.455\;MeV/c^2$ zu sehen. 
+
+Abbildung \ref{fig:promptphimass} zeigt die invariante Massenverteilung von jeweils zwei kombinierten geladenen Kaonen, die wie erwartet, einen Peak um den Erwartungswert der invarianten Masse des $\phi$-Mesons bei $m^{PDG}_{\phi}=1019.455\;MeV/c^2$ und einen hohen Level an Untergrundereignissen aufweist. %Die Zeitauflösung aus Ereignissen des Signalpeaks und der Untergrundereignisse ist im Kapitel \ref{ch:seitenband} analysiert.
+  
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/phimass_promptphi_data_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/phimass_promptphi_data_2012.eps}}
+\caption{Invariante $K^+K^-$-Massenverteilung von $\phi$-Kandidaten, die ein Pseudo-$B_s^0$-Meson mimen, von Ereignissen aus Daten 2011 (links) und 2012 (rechts)}
+\label{fig:promptphimass}
+\end{figure} 
+\vspace{2cm}
+
+\subsection[Bestimmung der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen]{Bestimmung der Zeitauflösung aus simulierten $B_s^0$- \\ \text{Signalereignissen}}
+\label{ch:tres}
+Da in simulierten Ereignissen die Zeitauflösung direkt bestimmbar ist und der realen Zeitauflösung von Ereignissen aus Daten ähnlich sein sollte, wird zuerst die Zeitauflösung aus simulierten $B_s^0$-Signalereignissen bestimmt.
+In der Analyse lässt sich die Zeitauflösung am besten beschreiben als Summe dreier Gaußfunktionen $\mathcal{TG}_{ZA}$ mit Normierungsfaktor $N_{ZA}$, Gaußbreiten $\sigma_1$, $\sigma_2$ und $\sigma_3$ sowie deren Anteile $f_1$ und $f_2$ und dem gemeinsamen Erwartungswert $\mu_t$:
+\begin{align*}
+\mathcal{TG}_{ZA}(t;f_1,f_2,\sigma_1,\sigma_2,\sigma_3,N_{ZA})&=N_{ZA} \Big( f_1 \frac{1}{\sqrt{2 \pi} \sigma_1} \exp \big( -{\frac{(t-\mu_t)^2}{2 \sigma_1^2}} \big) \\&+  (1-f_1) f_2  \frac{1}{\sqrt{2 \pi} \sigma_2} \exp \big(- {\frac{(t-\mu_t)^2}{2 \sigma_2^2}} \big)\\ &+ (1- f_1)(1-f_2) \frac{1}{\sqrt{2 \pi} \sigma_3} \exp \big(- {\frac{(t-\mu_t)^2}{2 \sigma_3^2}} \big) \Big).  
+\end{align*}
+In der gewählten Parametrisierung beträgt die mittlere Breite des Tripelgaußes und damit die mittlere Zeitauflösung: 
+\[\sigma_{gesamt} = \sqrt{f_1 \sigma_1^2+ (1-f_1)f_2\sigma_2^2+  (1-f_1)(1-f_2)\sigma_3^2}.\]
+
+Die Fitfunktion $\mathcal{TG}_{ZA}$ wird an simulierte $B_s^0$-Signalereignisse angepasst.Die Abbildung \ref{fig:MCsignaltres} zeigt deren Verteilung der Zeitauflösung. Die Resultate des Fits in Tabelle \ref{table:fitsignalMC} ergeben eine mittlere Zeitauflösung von $\sigma_{gesamt,2011}$= 0.049$\pm$0.002 ps bzw. $\sigma_{gesamt,2012}$=0.058$\pm$0.002 ps.
+
+Die unterschiedlichen Ergebnisse für 2011 und 2012 kommen durch die unterschiedliche Verteilung der simulierten Ereignisse zustande. In der simulierten Verteilung aus 2011 ist der Anteil der Ereignisse im Kern höher und der Fit beschreibt somit die Ausläufer der Verteilung weniger als in simulierten Ereignissen aus 2012.
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_Bs2PhiPhi_MC_2011_log_1.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_Bs2PhiPhi_MC_2012_log_1.eps}}
+\caption{Verteilung der Zeitauflösung der simulierten $B_s^0$-Signalereignisse 2011 (links) und 2012 (rechts)}
+\label{fig:MCsignaltres}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter & Wert 2011& Wert 2012 \tabularnewline
+\hline 
+$N_{ZA}$ & 55230 $\pm$ 234& 51731 $\pm$ 225 \tabularnewline
+$\mu_t$ [ps]& 1.3$\cdot 10^{-5} \pm$ 1.73$\cdot 10^{-4}$ & 1.96$\cdot 10^{-4}\;\pm$ 1.88$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps]& 0.058 $\pm$ 0.001& 0.033 $\pm$ 0.001 \tabularnewline
+$\sigma_2$ [ps]& 0.240 $\pm$ 0.020& 0.445 $\pm$ 0.053 \tabularnewline
+$\sigma_3$ [ps]& 0.030 $\pm$ 0.001& 0.066 $\pm$ 0.002 \tabularnewline
+$f_1$ & 0.376 $\pm$ 0.025 & 0.666 $\pm$ 0.021\tabularnewline
+$f_2$ & 0.016 $\pm$ 0.002& 0.019 $\pm$ 0.002 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 105.6/76 & 135.5/76 \tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]& 0.049 $\pm$ 0.002 & 0.058 $\pm$ 0.002 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Ergebnisse der Parameter aus dem Fit an die Verteilung der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen 2011 (links) und 2012 (rechts)}
+\label{table:fitsignalMC}
+\end{table}
+
+
+
+\subsection{Bestimmung der Zeitauflösung aus Ereignissen prompter Pseudo-$B_s^0$-Mesonen}
+Die ursprüngliche Absicht der Analyse war, die Zeitauflösung mittels prompter $\phi$-Mesonen zu bestimmen, die ein "`promptes $B_s^0\rightarrow\phi\phi$"' mimen. Allerdings hat sich herausgestellt, dass nicht genügend Ereignisse zur Verfügung standen und diese Standardmethode zur Bestimmung der Zeitauflösung aus prompten Pseudo-$B_s^0$-Mesonen nicht mit der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen übereinstimmt.
+%\vspace{4mm}
+
+Zuerst wird untersucht, ob simulierte Ereignisse mit prompten Pseudo-$B_s^0$-Mesonen zur gleichen Zeitauflösung führen, wie sie für simulierte $B_s^0$-Signal-zerfälle bestimmt wird. Danach wird die Zeitauflösung prompter Pseudo-$B_s^0$-Kandidaten aus Ereignissen aus Daten ermittelt. Simulierte $B_s^0$-Signalereignisse charakterisieren dabei echte $B_s^0$-Mesonen, wobei in simulierten prompten Ereignissen Pseudo-$B_s^0$-Mesonen aus prompten $\phi$-Mesonen gemimt werden, die ausschließlich für die Bestimmung der Zeitauflösung relevant sind.
+
+Da im verwendeten Datensatz der Pseudo-$B_s^0$-Kandidaten auch die zur Lebensdauerbestimmung benutzten echten $B_s^0$-Signalereignisse enthalten sind, wird der Bereich positiver Zerfallszeiten nicht allein durch eine Funktion der Auflösung beschrieben. Daher wird die Fitfunktion $\mathcal{TG}_{ZA}$ in allen Analysen der Zeitauflösung von prompten Pseudo-$B_s^0$-Mesonen, wie in Abbildung \ref{fig:fitstrat} angedeutet, nur an die linke Flanke der Verteilungen zu negativen Zerfallszeiten gefittet. 
+
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=0.51\textwidth]{eps/schema.jpg}%CHANGE
+  \caption{Schematische Darstellung des Fitintervalls für die Bestimmung der Zeitauflösung von zwei prompten $\phi$-Mesonen, die ein Pseudo-$B_s^0$-Meson mimen. Die erwartete Zeitauflösungsverteilung ist schwarz und die tatsächliche Zeitauflösungsverteilung rot gezeichnet, wobei die langlebigen Zerfälle zu positiven Zerfallszeiten dünn und das für den Fit benutze Intervall negativer Zerfallszeiten dick eingezeichnet ist.}
+\label{fig:fitstrat}
+\end{figure}
+
+
+\subsubsection[Vergleich der Zeitauflösung von simulierten $B_s^0$-Signalereig-nissen mit simulierten prompten Pseudo-$B_s^0$-Ereignissen]{Vergleich der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen mit simulierten prompten Pseudo-$B_s^0$-Ereignissen}
+Abbildung \ref{fig:MCprompttres} zeigt die Zeitauflösungsverteilung der simulierten $B_s^0$-Signaler-eignisse im Vergleich zu der von simulierten Ereignissen prompter Pseudo-$B_s^0$. Da die $\phi$-Mesonen prompt sind, wird gefordert, dass echte $B_s^0$-Mesonen nicht selektiert werden. Da nur die negative Zerfallszeitverteilung genutzt werden kann und die Anzahl der Ereignisse gering ist, wird der Erwartungswert $\mu_t$ auf 0 festgesetzt, damit der Fit konvergiert. Der positive Bereich der Zeitauflösungsverteilung ist wegen der überlagerten langlebigen Anteile nicht dargestellt.
+
+Die Verteilungen sind deutlich verschieden. Im Kern der Verteilung prompter Pseudo-$B_s^0$-Ereignisse befinden sich erwartungsgemäß viele Ereignisse, während in die Flanke der Verteilung nur wenige Ereignisse bilden. In Tabelle \ref{table:fitpromptMC} werden die Resultate der gefitteten Auflösungsparameter an die Verteilung prompter Pseudo-$B_s^0$-Ereignisse gelistet. Diese führen zu einer mittleren Zeitauflösung der simulierten prompten Pseudo-$B_s^0$-Ereignisse von $\sigma_{gesamt,2011}=$0.170$\pm$0.013 ps bzw. $\sigma_{gesamt,2012}=$0.192$\pm$0.017 ps. Diese Werte entsprechen dem drei- bzw. vierfachen der Zeitauflösung der simulierten $B_s^0$-Signalereignisse. Eine Übereinstimmung der Zeitauflösung wird nicht beobachtet. Die Werte weichen deutlich voneinander ab. Grund dafür ist die geringe Anzahl an prompten $\phi$-Mesonen aus simulierten Ereignissen, die ein Pseudo-$B_s^0$-Meson mimen, sodass die Auswahl der Ereignisse nicht repräsentativ ist. Da die Flanken des Fits nur wenige Ereignisse beschreiben, beeinflussen diese die Zeitauflösung stark. 
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptphi_MC_comp_2011.eps}}%signal rein
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptphi_MC_comp_2012.eps}}
+\caption{Vergleich der Verteilung der Zeitauflösung der simulierten prompten Pseudo-$B_s^0$-Ereignisse (blau) mit simulierten $B_s^0$-Signalereignissen (schwarz) 2011 (links) und 2012 (rechts)}
+\label{fig:MCprompttres}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+$N_{ZA}$ & 2563 $\pm$ 74& 3129 $\pm$ 81 \tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.518 $\pm$ 0.118& 0.489 $\pm$ 0.094 \tabularnewline
+$\sigma_2$ [ps]& 0.094 $\pm$ 0.007& 0.134 $\pm$ 0.015 \tabularnewline
+$\sigma_3$ [ps]& 0.033 $\pm$ 0.003& 0.042 $\pm$ 0.003 \tabularnewline
+$f_1$ & 0.091 $\pm$ 0.013 & 0.125 $\pm$ 0.023\tabularnewline
+$f_2$ & 0.481 $\pm$ 0.054& 0.038$\pm$ 0.042 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 40.90/44 & 27.08/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps] & 0.170 $\pm$ 0.013 & 0.192 $\pm$ 0.017\tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter aus dem Fit an die Verteilung der Zeitauflösung aus simulierten prompten Pseudo-$B_s^0$-Ereignissen 2011 (links) und 2012 (rechts)}
+\label{table:fitpromptMC}
+\end{table}
+
+%\subsubsection{Vergleich der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen mit prompten $\phi$-Ereignissen aus Daten}
+%%\subsection{Bestimmung der Zeitauflösung aus prompten $\phi$ von Ereignissen aus Daten}
+%Für die Bestimmung der Zeitauflösung aus Ereignissen prompter $\phi$ ist die Zeitauflösungsfunktion in Abbildung \ref{fig:trespromptdata} an Daten vergleichend mit der von simulierten $B_s^0$-Signal gefittet. 
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptphi_data_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptphi_data_2012.eps}}
+%\caption{Vergleich der Verteilung der Zeitauflösung von Ereignissen prompter $\phi$ aus Daten mit simulierten $B_s^0$-Signalereignissen aus 2011 (links) und 2012 (rechts)}
+%\label{fig:trespromptdata}
+%\end{figure} 
+%
+%\begin{table}[h!]
+%\noindent \begin{centering}
+%\begin{tabular}{c|c|c}
+%Parameter & Wert 2011 & Wert 2012 \tabularnewline
+%\hline 
+%$N_{ZA}$ & 80073 $\pm$ 392& 73940 $\pm$ 259 \tabularnewline
+%%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+%$\sigma_1$ [ps] & 0.0.985 $\pm$ 0.0031& 0.1017 $\pm$ 0.0025 \tabularnewline
+%$\sigma_2$ [ps] & 0.2529 $\pm$ 0.0076& 0.2462 $\pm$ 0.0061 \tabularnewline
+%$\sigma_3$ [ps] & 0.0431 $\pm$ 0.0009& 0.0436 $\pm$ 0.0008 \tabularnewline
+%$f_1$ & 0.3859 $\pm$ 0.0174 & 0.41533 $\pm$ 0.01241 \tabularnewline
+%$f_2$ & 0.1422 $\pm$ 0.0133& 0.17362 $\pm$ 0.01380 \tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 83.9/44 & 149.6/44\tabularnewline
+%\hline
+%$\sigma_{gesamt}$ [ps] & 0.1015 $\pm$ 0.0023 & 0.1066 $\pm$ 0.0018\tabularnewline
+%\end{tabular}
+%\par \end{centering}
+%\caption{Übersicht der Ergebnisse der Parameter aus dem Fit an die Verteilung der Zeitauflösung aus Ereignissen aus Daten 2011 (links) und 2012 (rechts)}
+%\label{table:fitpromptdata}
+%\end{table}
+%
+%Tabelle \ref{table:fitpromptdata} zeigt, dass die Zeitauflösung aus Ereignissen prompter $\phi$ aus Daten $\sigma_{gesamt,2011}=$0.1015$\pm$0.0023 ps bzw. $\sigma_{gesamt,2012}=$0.1066$\pm$0.0018 ps auch signifikant größer sind als die der simulierten $B_s^0$-Signalereignisse. Hier erlaubt die Anzahl der Ereignisse in gleicher Größenordnung einen Vergleich. Dennoch entsprechen diese Werte 2$\sigma_{gesamt}$ der simulierten $B_s^0$-Signalereignisse.
+
+
+\subsubsection{Bestimmung der Zeitauflösung nach Umgewichten der prompten Pseudo-$B_s^0$-Kandidaten aus Daten nach kinematischen Verteilungen}
+Da die Zeitauflösung von simulierten prompten Pseudo-$B_s^0$-Ereignissen nicht mit der von simulierten $B_s^0$-Signalereignissen übereinstimmt, werden nun mögliche Ursachen überprüft und die Zeitauflösung aus prompten $\phi$-Kandidaten aus Daten, die ein Pseudo-$B_s^0$-Meson mimen, bestimmt. 
+
+Die Zeitauflösung ist maßgeblich durch die Kinematik eines Zerfalls bestimmt. Da prompte Pseudo-$B_s^0$-Mesonen direkt am Primärvertex entstehen, können sich ihre kinematischen Verteilungen deutlich von solchen, die im Zerfall eines echten $B_s^0$-Mesons entstehen, unterscheiden. In diesem Unterkapitel wird der Transversalimpuls der $B_s^0$-Mesonen $p_T(B_s^0)$ und der $\phi$-Mesonen $p_{T}(\phi)$ sowie deren Öffnungswinkel $\theta=\angle(\phi_1,\phi_2)$ von Ereignissen prompter $\phi$-Mesonen, die ein Pseudo-$B_s^0$-Meson mimen, und $B_s^0$-Signalereignissen verglichen. Durch das Umgewichten werden die Pseudo-$B_s^0$-Verteilungen aus Daten an die Verteilungen der Signalereignisse angeglichen. Mit dieser korrigierten Kinematik wird die Zeitauflösung von Pseudo-$B_s^0$-Kandidaten aus Daten neu bestimmt.
+
+Da das ereignisabhängige Schneiden der multivariablen Analyse (MVA) die Kinematik der simulierten $B_s^0$-Ereignisse unvergleichbar mit den prompten Pseudo-$B_s^0$-Ereignissen macht, wird im Folgenden mit den simulierten $B_s^0$-Ereignissen vor der Anwendung der MVA verglichen: Dafür werden die Verteilungen auf die gleiche Anzahl von Ereignissen normiert und übereinander in den Abbildungen \ref{fig:vglbspt} - \ref{fig:vgltheta} dargestellt. 
+
+%Simulierte $B_s^0$-Signalereignisse sind dabei echte $B_s^0$, wobei simulierte Ereignisse prompter $\phi$ nur falsche $B_s^0$-Mesonen mimen und ausschließlich für die Bestimmung der Zeitauflösung relevant sind.
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/bs_pt_comparison_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/bs_pt_comparison_2012.eps}}
+\caption{Vergleich der Verteilungen des $B_s^0$-Transversalimpulses von prompten simulierten Pseudo-$B_s^0$-Ereignissen (blau), prompten Pseudo-$B_s^0$-Kandidaten aus Daten (rot) und simulierten $B_s^0$-Signalereignissen vor Anwendung der MVA (schwarz) von 2011 (links) und 2012 (rechts)}
+\label{fig:vglbspt}
+\end{figure} 
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/pt_phi_comparison_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/pt_phi_comparison_2012.eps}}
+\caption{Vergleich der Verteilungen des $\phi$-Transversalimpulses von prompten simulierten $\phi$-Ereignissen, die ein Pseudo-$B_s^0$ mimen (blau), prompten $\phi$-Kandidaten aus Daten, die ein Pseudo-$B_s^0$ mimen (rot) und simulierten $\phi$-Mesonen aus $B_s^0$-Signalereignissen vor Anwendung der MVA (schwarz) von 2011 (links) und 2012 (rechts)}
+\label{fig:vglphipt}
+\end{figure} 
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/theta_phi_comparison_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/theta_phi_comparison_2012.eps}}
+\caption{Vergleich der Verteilungen des Öffnungswinkels $\theta$ zwischen zwei $\phi$-Mesonen von prompten simulierten $\phi$-Ereignissen, die ein Pseudo-$B_s^0$ mimen (blau), prompten $\phi$-Kandidaten aus Daten, die ein Pseudo-$B_s^0$ mimen (rot) und simulierten $\phi$-Mesonen aus $B_s^0$-Signalereignissen vor Anwendung der MVA (schwarz) von 2011 (links) und 2012 (rechts)}
+\label{fig:vgltheta}
+\end{figure} 
+
+Abbildungen \text{\ref{fig:vglbspt}$\;$-} \ref{fig:vgltheta} zeigen, dass Ereignisse von prompten Pseudo-$B_s^0$ im Vergleich zu den simulierten $B_s^0$-Signalereignissen im Mittel niedrigere Transversalimpulse der $\phi$- und $B_s^0$-Mesonen und größere Öffnungswinkel $\theta$ haben. %Die hohen Werte in der $\theta$-Verteilung am Rand in simulierten prompten $\phi$-Ereignissen resultieren aus der geringen Anzahl der Ereignisse bei großen Winkeln.
+
+Mit den Gewichten aus diesen signifikanten kinematischen Unterschieden zwischen simulierten $B_s^0$ Signalereignissen und prompten Pseudo-$B_s^0$ wird die Zerfallszeit prompter Pseudo-$B_s^0$-Kandidaten aus Daten in den Abbildungen \text{\ref{fig:tresbspt} -} \ref{fig:trestheta} gewichtet. Dabei werden die beiden Histogramme der Gewichtungsvariable durcheinander geteilt und das Gewicht $w_i$ bestimmt:
+\[w_i(p_T(B_s^0),p_T(\phi)\text{ oder }\theta(\phi)\big)=\frac{\text{prompte Pseudo-$B_s^0$-Kandidaten}}{\text{$B_s^0$-Signalereignisse}}.\]
+
+Die Ereignisse werden gemäß dieses Verhältnisses umgewichtet, sodass die daraus resultierenden Verteilungen der Zerfallszeit prompter Pseudo-$B_s^0$-Kandi-daten an die von simulierten $B_s^0$-Signalereignisse kinematisch angeglichen wird. % mit dem die Zerfallszeit beim Füllen des neuen Histogramms eine neue Gewichtung bekommt.% Als Überprüfung der Methode ist die Gewichtungsvariable selbst umgewichtet, sodass bei korrekter Anwendung eine deckungsgleiche Verteilung entsteht. 
+Durch das Umgewichten auf kinematische Variablen der $B_s^0$-Signalereignisse wird eine Verringerung der Verteilung der Zeitauflösung erwartet, da Ereignisse mit hohem Transversalimpuls erfahrungsgemäß besser aufgelöst werden. 
+
+In Abbildungen \ref{fig:tresbspt} - \ref{fig:trestheta} ist jeweils die nach einer Variablen umgewichtete Zeitauflösungsverteilung mit der ungewichteten Zeitauflösungsverteilung prompter Pseudo-$B_s^0$-Kandidaten aus Daten normiert dargestellt. Die Verteilungen der Zeitauflösung sehen durch das Umgewichten kaum verändert aus. Tabelle \ref{table:fitpromptdata} zeigt die Fitergebnisse der Zeitauflösung von Ereignissen prompter Pseudo-$B_s^0$ ohne Umgewichten. Die ermittelte mittlere Zeitauflösung von $\sigma_{gesamt,2011}=$ 0.102$\pm$0.013 ps bzw. $\sigma_{gesamt,2012}=$0.107 $\pm$0.017 ps weicht deutlich von der Zeitauflösung der simulierten $B_s^0$-Signalereignissen ab. Tabellen \text{\ref{table:fitpromptdatarebspt} -} \ref{table:fitpromptdatare} zeigen keine signifikanten Änderungen der mittleren Zeitauflösung von prompten Pseudo-$B_s^0$-Kandidaten durch das Umgewichten. Eine minimale Annäherung an die Zeitauflösung der simulierten $B_s^0$-Signalereignisse ergab das Umgewichten auf die Transversalimpulse des $\phi$-Mesons $p_T(\phi)$ mit $\sigma_{gesamt,2011}=$ 0.097$\pm$0.003 ps bzw. $\sigma_{gesamt,2012}=$0.104 $\pm$0.003 ps.
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+$N_{ZA}$ & 80073 $\pm$ 392& 73940 $\pm$ 259 \tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.099 $\pm$ 0.003& 0.102 $\pm$ 0.003 \tabularnewline
+$\sigma_2$ [ps] & 0.253 $\pm$ 0.008& 0.246 $\pm$ 0.006 \tabularnewline
+$\sigma_3$ [ps] & 0.043 $\pm$ 0.001& 0.044 $\pm$ 0.001 \tabularnewline
+$f_1$ & 0.386 $\pm$ 0.017 & 0.415 $\pm$ 0.012 \tabularnewline
+$f_2$ & 0.142 $\pm$ 0.013& 0.174 $\pm$ 0.013\tabularnewline
+\hline
+$\chi^2/nDoF$ & 83.9/44 & 149.6/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps] & 0.102 $\pm$ 0.002 & 0.107 $\pm$ 0.002\tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter aus dem Fit an die Verteilung der Zeitauflösung aus Ereignissen prompter Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten 2011 (links) und 2012 (rechts)}
+\label{table:fitpromptdata}
+\end{table}
+
+
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_bsptweighted_data_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_bsptweighted_data_2012.eps}}
+\caption{Vergleich der Verteilung der Zeitauflösung der auf $B_s^0$-Transversalimpuls $p_T(B_s^0)$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten (dunkelgrün), die aus prompten $\phi$-Kandidaten gemimt werden, mit der ursprünglichen Verteilung prompter Pseudo-$B_s^0$-Kandidaten (rot), die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten von 2011 (links) und 2012 (rechts)}
+\label{fig:tresbspt}
+\end{figure} 
+
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter&Wert 2011&Wert 2012\tabularnewline
+\hline 
+%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.235 $\pm$ 0.049 & 0.106 $\pm$ 0.003 \tabularnewline
+$\sigma_2$ [ps]& 0.094 $\pm$ 0.026  & 0.250 $\pm$ 0.007 \tabularnewline
+$\sigma_3$ [ps]& 0.041 $\pm$ 0.001 & 0.043 $\pm$ 0.001 \tabularnewline%
+$f_1$ & 0.120 $\pm$ 0.007 & 0.409 $\pm$ 0.011   \tabularnewline
+$f_2$ & 0.490 $\pm$ 0.021 & 0.208 $\pm$ 0.018 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 159.9/44 & 230.8/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]&0.106 $\pm$ 0.002&0.115 $\pm$ 0.002 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter des Fits an die Verteilung der Zeitauflösung auf $B_s^0$-Transversalimpuls $p_T(B_s^0)$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten 2011 und 2012}
+\label{table:fitpromptdatarebspt}
+\end{table}
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_phiptweighted_data_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_phiptweighted_data_2012.eps}}
+\caption{Vergleich der Verteilung der Zeitauflösung der auf $\phi$-Transversalimpuls $p_T(\phi)$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten (dunkelgrün), die aus prompten $\phi$-Kandidaten gemimt werden, mit der ursprünglichen Verteilung prompter Pseudo-$B_s^0$-Kandidaten (rot), die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten von 2011 (links) und 2012 (rechts)}
+\label{fig:tresphipt}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter&Wert 2011&Wert 2012\tabularnewline
+\hline 
+%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.227 $\pm$ 0.008 & 0.248 $\pm$ 0.009 \tabularnewline
+$\sigma_2$ [ps]& 0.090 $\pm$ 0.004  & 0.103 $\pm$ 0.003 \tabularnewline
+$\sigma_3$ [ps]& 0.040 $\pm$ 0.001 & 0.044 $\pm$ 0.001 \tabularnewline
+$f_1$ & 0.102 $\pm$ 0.025 & 0.0889 $\pm$ 0.009   \tabularnewline
+$f_2$ & 0.463 $\pm$ 0.033 & 0.4560 $\pm$ 0.020 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 40.1/44 & 86.0/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]&0.097 $\pm$ 0.003&0.104 $\pm$ 0.003 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter des Fits an die Verteilung der Zeitauflösung auf $\phi$-Transversalimpuls $p_T(\phi)$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten 2011 und 2012}
+\label{table:fitpromptdatare}
+\end{table}
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_thetaweighted_data_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_thetaweighted_data_2012.eps}}
+\caption{Vergleich der Verteilung der Zeitauflösung der auf $\phi$-Öffnungswinkel $\theta$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten (dunkelgrün), die aus prompten $\phi$-Kandidaten gemimt werden, mit der ursprüng-lichen Verteilung prompter Pseudo-$B_s^0$-Kandidaten (rot), die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten von 2011 (links) und 2012 (rechts)}
+\label{fig:trestheta}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter&Wert 2011&Wert 2012\tabularnewline
+\hline 
+%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.233 $\pm$ 0.005 & 0.247 $\pm$ 0.007 \tabularnewline
+$\sigma_2$ [ps]& 0.042$\pm$ 0.001  & 0.103 $\pm$ 0.003 \tabularnewline
+$\sigma_3$ [ps]& 0.091 $\pm$ 0.003 & 0.043 $\pm$ 0.001 \tabularnewline
+$f_1$ & 0.119 $\pm$ 0.007 & 0.115 $\pm$ 0.009   \tabularnewline
+$f_2$ & 0.542 $\pm$ 0.026 & 0.452 $\pm$ 0.016 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 117.7/44 & 226.9/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]&0.103 $\pm$ 0.003&0.110 $\pm$ 0.002 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Ergebnisse der Parameter des Fits an die Verteilung der Zeitauflösung auf Öffnungswinkel $\theta(\phi)$ umgewichteten prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten gemimt werden, aus Daten 2011 und 2012}
+\label{table:fitpromptdatare}
+\end{table}
+
+
+\subsubsection[Bestimmung der Zeitauflösung von prompten Pseudo-$B_s^0$-Kandidaten des Peaks und der Seitenbändern der invarianten $K^+K^-$-Massenverteilung]{Bestimmung der Zeitauflösung von prompten Pseudo-$B_s^0$-Kandi-daten des Peaks und der Seitenbändern der invarianten $K^+K^-$-Massenverteilung}
+\label{ch:seitenband}
+Da das Ergebnis der Zeitauflösung von prompten Pseudo-$B_s^0$-Kandidaten aus Daten, die aus prompten $\phi$-Kandidaten gemimt werden, nicht mit dem von simulierten $B_s^0$-Signalereignissen übereinstimmt, wird in diesem Unterkapitel untersucht, ob dafür der hohe Untergrundanteil in der invarianten $K^+K^-$-Massenverteilung verantwortlich ist. Es wird überprüft, ob das geforderte Intervall der invarianten $\phi$-Masse zu groß gewählt worden ist, sodass viele nicht resonante Kaonen das Ergebnis der Zeitauflösung verfälschen könnten.
+
+Abbildung \ref{fig:promptphimass} zeigt die Verteilung der invarianten $K^+K^-$-Masse der prompten $\phi$-Kandidaten. Setzt man in dieser Verteilung den Massenpeak im Intervall [1010,1030] MeV/c$^2$ an, so lassen sich die Pseudo-$B_s^0$-Kandidaten in eine $\phi$-Peakverteilung mit resonanten Kaonen und eine $\phi$-Seitenbandverteilung mit ausschließlich nichtresonanten Kaonen spalten. Die Fitfunkton $\mathcal{TG}_{ZA}$ wird an die beiden Zerfallszeitverteilungen der Pseudo-$B_s^0$-Kandidaten gefittet. %Zu erwarten ist eine niedrigere Zeitauflösung für die $\phi$-Peakverteilung. 
+Abbildung \ref{fig:tresseite} zeigt die Fits an die beiden Zeitauflösungsverteilungen, die sich sehr ähnlich sind. 
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptPhi_Seitenbaender_data_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_promptPhi_Seitenbaender_data_2012.eps}}
+\caption{Vergleich der Zeitauflösung von prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten des $\phi$-Massenpeaks gemimt werden (rot), und von prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten der Seitenbänder der invarianten $K^+K^-$-Massenverteilung (dunkelrot) gemimt werden, aus Ereignissen aus Daten 2011 (links) und 2012 (rechts)}
+\label{fig:tresseite}
+\end{figure} 
+
+Tabellen \ref{table:peak} und \ref{table:seite} zeigen die Ergebnisse der Fits. Die mittlere Zeitauf-lösung von prompten Pseudo-$B_s^0$-Kandidaten aus den Seitenbändern der $K^+K^-$-Massenverteilung beträgt $\sigma_{gesamt,2011}=$0.102$\pm$0.003 ps bzw. $\sigma_{gesamt,2012}=$0.107 $\pm$0.002 ps. Diese ist nicht signifikant höher als die Zeitauflösung der Peakverteilung von $\sigma_{gesamt,2011}=$0.099$\pm$0.004 ps bzw. $\sigma_{gesamt,2012}=$ 0.106 $\pm$0.003 ps. Somit haben Pseudo-$B_s^0$-Kandidaten aus nicht resonanten Kaonen und Kaonen, die von einem $\phi$-Meson stammen, die gleiche mittlere Zeitauflösung. Das große Intervall der invarianten $\phi$-Masse hat keinen Einfluss auf die Bestimmung der Zeitauflösung.
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter&Wert 2011&Wert 2012\tabularnewline
+\hline 
+%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.235 $\pm$ 0.012 & 0.239 $\pm$ 0.009 \tabularnewline
+$\sigma_2$ [ps]& 0.095 $\pm$ 0.005  & 0.102 $\pm$ 0.004 \tabularnewline
+$\sigma_3$ [ps]& 0.041 $\pm$ 0.001 & 0.044 $\pm$ 0.001 \tabularnewline%
+$f_1$ & 0.101 $\pm$ 0.014 & 0.495 $\pm$ 0.011   \tabularnewline
+$f_2$ & 0.412 $\pm$ 0.034 &0.209 $\pm$ 0.018 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 46.5/44 &63.3/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]&0.099 $\pm$ 0.004&0.106 $\pm$ 0.003 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter aus dem Fit an die Verteilung der Zeitauflösung prompter Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten des $\phi$-Massenpeaks gemimt werden, aus Daten 2011 (links) und 2012 (rechts)}
+\label{table:peak}
+\end{table}
+
+\begin{table}[h!]
+\noindent \begin{centering}
+\begin{tabular}{c|c|c}
+Parameter&Wert 2011&Wert 2012\tabularnewline
+\hline 
+%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+$\sigma_1$ [ps] & 0.261 $\pm$ 0.010 & 0.248 $\pm$ 0.008 \tabularnewline
+$\sigma_2$ [ps]& 0.101 $\pm$ 0.004  & 0.101 $\pm$ 0.003 \tabularnewline
+$\sigma_3$ [ps]& 0.044 $\pm$ 0.001 & 0.043 $\pm$ 0.001 \tabularnewline%
+$f_1$ & 0.392 $\pm$ 0.022 & 0.425 $\pm$ 0.016   \tabularnewline
+$f_2$ & 0.131 $\pm$ 0.016 & 0.175 $\pm$ 0.018 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 69.3/44 & 108.4/44\tabularnewline
+\hline
+$\sigma_{gesamt}$ [ps]&0.102 $\pm$ 0.003&0.107 $\pm$ 0.002 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Parameter aus dem Fit an die Verteilung der Zeitauflösung prompter Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten der Seitenbänder der invarianten $K^+K^-$-Massenverteilung gemimt werden, aus Daten 2011 (links) und 2012 (rechts)}
+\label{table:seite}
+\end{table}
+
+\subsection{Diskussion und Zusammenfassung der Bestimmung der Zeitauflösung}
+Um die mittlere Zeitauflösung der Verteilungen zu vergleichen, werden sie auf die selbe Anzahl an Ereignissen normiert und in Abbildung \ref{fig:trescomparison} gemeinsam dargestellt. Als Referenz wird die Zeitauflösungsverteilung der simulierten $B_s^0$-Signalereignisse schwarz gezeichnet. Die Verteilung der Zeitauflösung aus simulierten prompten Pseudo-$B_s^0$-Ereignissen, die aus prompten $\phi$-Ereignissen gemimt werden, ist blau gezeichnet, während die Zeitauflösungsverteilung aus prompten Pseudo-$B_s^0$-Kandidaten aus Daten, die aus prompten $\phi$-Kandidaten gemimt werden, rot dargestellt ist. Auf eine Darstellung der umgewichteten Pseudo-$B_s^0$-Zeitauflösungsverteilungen ist hier verzichtet, da sich die Ergebnisse durch das Umgewichten nicht signifikant voneinander unterscheiden. 
+
+Hier ist zu erkennen, dass die Zeitauflösungsverteilung sowohl im Intervall des Kerns [-0.1,0] ps als auch in den Flanken zwischen simulierten $B_s^0$-Signalereignissen und prompten Pseudo-$B_s^0$-Kandidaten verschieden ist. Auf \text{logarithmischer} Skala ist zu erkennen, dass die Verteilungen prompter Pseudo-$B_s^0$-Kandidaten deutlich breiter sind, was sich numerisch in deutlich größeren ersten Gaußbreiten äußert.
+
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_signalMCpromptdata_2011.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_signalMCpromptdata_2012.eps}}
+\caption{Vergleich der Zeitauflösung von simulierten prompten Pseudo-$B_s^0$-Ereignissen, die aus prompten $\phi$-Ereignissen gemimt werden (blau) und prompten Pseudo-$B_s^0$-Kandidaten aus Daten, die aus prompten $\phi$-Kandidaten gemimt werden (rot), zu simulierten $B_s^0$-Signalereignissen (schwarz) von 2011 (links) und 2012 (rechts)}
+\label{fig:trescomparison}
+\end{figure} 
+
+Durch die niedrige Anzahl simulierter prompter Pseudo-$B_s^0$-Ereignisse befinden sich in der Flanke der Verteilung einzelne Ereignisse, die nur durch das Normieren stark gewichtet und in ihrer Fehlerbreite mit Null vereinbar sind. Untergrundereignisse mit hohen "`negativen Zerfallszeiten"' könnten durch \text{fehlerhafte} Primärvertexzuordnung entstehen. Deshalb wird stark auf den Stoßparameter zu anderen Primärvertices $2^{nd}\;IP$ geschnitten, was den Effekt allerdings nicht signifikant verringert.
+
+%Außerdem wurde in einem zwei-dimensionalen Plot die Anzahl der Primärvertices eines Ereignisses mit der Zerfallszeit aufgetragen. Dabei wurde kein signifikanter Zusammenhang festgestellt.
+
+%Auch eine Analyse der Zeitauflösung der Seitenbänder der Massenverteilung in Abbildung \ref{fig:promptphimass} ergab keine signifikanten Unterschiede der Zeitauflösung zwischen $\phi$-Signalereignissen und Untergrundereignissen.
+
+%\subsection{Diskussion der Ergebnisse der Bestimmung der Zeitauflösung}
+
+Eine Zusammenfassung der Ergebnisse der Bestimmung der Zeitauflösung \text{aller} untersuchten Verteilungen bietet Tabelle \ref{table:tresresultsall}. %Für eine Bestätigung der Bestimmung der Zeitauflösung aus simulierten prompten $\phi$ ist die vorhandene Anzahl an Ereignissen zu gering. 
+Es treten deutliche Abweichungen zwischen der Zeitauflösung von prompten Pseudo-$B_s^0$-Ereignissen und $B_s^0$-Signalereignissen auf. Ein Umgewichten auf kinematische Verteilungen gleicht die Zeitauflösungsverteilungen nur minimal an und bringt keine Übereinstimmung. Die höhere Zeitauflösung von auf $\theta$- und $p_T(B_s^0)$-umgewichtete Pseudo-$B_s^0$-Kandidaten ist unerwartet. Bei allen Analysen von prompten Pseudo-$B_s^0$-Kandidaten aus Daten zeigt sich ein Unterschied von ungefähr 50 fs zur Zeitauflösung aus simulierten $B_s^0$-Signalereignissen. Dieser beobachtbare Unterschied in der Zeitauflösung kann nicht eindeutig erklärt werden. Eine Ursache dafür kann sein, dass die Daten für diese Analyse nicht vorgesehen sind und nur aus zufällig registrierten Kollisionen besteht, in denen auch langlebige Zerfälle rekonstruiert werden. Die Auswahl der Ereignisse ist somit eventuell nicht repräsentativ. Im verwendeten Datensatz könnte auch ein Anteil an langlebigen D-Zerfällen enthalten sein, die die Zeitauflösungsverteilung deformieren. 
+
+Daher wird für die Bestimmung der Lebensdauer das Ergebnis der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen angenommen. Die Abweichung zur Zeitauflösung von prompten Pseudo-$B_s^0$-Kandidaten aus Daten wird als die systematische Unsicherheit der Lebensdauer, begründet durch die Verwendung der Zeitauflösung von simulierten $B_s^0$-Signalereignissen, im Kapitel \ref{ch:syst} verwendet.
+
+\begin{table}[h!]
+\noindent\begin{centering}
+\begin{tabular}{c|c|c}
+Satz an Ereignissen& $\sigma_{gesamt,2011}$ [ps] & $\sigma_{gesamt,2012}$ [ps]\tabularnewline
+\hline 
+\hline
+simulierte $B_s^0$-Signalereignisse & 0.049 $\pm$ 0.002 & 0.058 $\pm$ 0.002\tabularnewline
+\hline
+simulierte prompte Pseudo-$B_s^0$&0.170 $\pm$ 0.013 & 0.192 $\pm$ 0.017 \tabularnewline
+prompte Pseudo-$B_s^0$-Kandidaten& 0.102 $\pm$ 0.002 & 0.107 $\pm$ 0.002\tabularnewline
+\hline
+prompt $\phi$-Seitenbänder &0.102 $\pm$ 0.003&0.107 $\pm$ 0.002 \tabularnewline
+prompt $\phi$-Peak &0.099 $\pm$ 0.004 &0.106 $\pm$ 0.003 \tabularnewline
+\hline
+prompt $p_T (B_s^0)$-gewichtet& 0.106 $\pm$ 0.003 & 0.115 $\pm$ 0.002 \tabularnewline %
+prompt $p_T (\phi)$-gewichtet& 0.096 $\pm$ 0.003 & 0.104 $\pm$ 0.003 \tabularnewline%
+prompt $\theta$-gewichtet& 0.103 $\pm$ 0.003 & 0.110 $\pm$ 0.002 \tabularnewline%
+\end{tabular}
+\par \end{centering}
+\caption{Zusammenfassung der Ergebnisse zur Bestimmung der Zeitauflösung $\sigma_{gesamt}$ aus Ereignissen von 2011 und 2012}
+\label{table:tresresultsall}
+\end{table}
+
+
+\newpage
+\section{Bestimmung der Zeitakzeptanz aus simulierten $B_s^0$-Ereignissen} 
+\label{ch:acc}
+Wichtig für Lebensdauermessungen ist ein gutes Verständnis der zerfallszeitabhängigen Nachweiseffizienz. Ursachen für die nicht homogene Effizienz sind die Rekonstruktion und die Selektion.
+Zum einen werden einige Teilchen vom Detektor nicht korrekt rekonstruiert, wenn sie außerhalb des VELO oder der Winkelakzeptanz des Detektors zerfallen. Da in der Ereignisselektion die lange Lebensdauer des $B_s^0$-Mesons ausgenutzt wird und die Zerfallsprodukte nicht aus dem Primärvertex stammen, werden zum anderen durch die Anwendung der Selektionsschnitte auch teilweise Signalereignisse für die Lebensdauermessung nicht berücksichtigt.
+
+Die Effizienz des Detektors, ein $B_s^0$-Meson zu rekonstruieren und zu selektieren, wird mit der Zeitakzeptanz $\epsilon_{Zeit}(t)$ in Abhängigkeit der Zerfallszeit $t$ beschrieben. Sie entspricht dem Verhältnis der Anzahl der rekonstruierten und selektierten zu produzierten $B_s^0$-Zerfällen:
+ \[ \epsilon_{Zeit}(t) = \frac{\text{\# rekonstruierte und selektierte } B_s^0 (t)}{\text{\# produzierte } B_s^0 (t)}.\]
+
+%Aus simulierten Ereignissen wird dabei das Verhältnis $\epsilon(t)$ der Zerfallszeit von selektierten echten $B_s^0$-Ereignissen zu einer statistischen Verteilung, die den exponentiell zerfallenden produzierte $B_s^0$-Mesonen entspricht, ermittelt.
+In dieser Arbeit wird die Zeitakzeptanz aus simulierten Ereignissen bestimmt. Dafür wird das oben genannte Verhältnis in Abhängigkeit der in simulierten Ereignissen bekannten echten Zerfallszeit $t_{echt}$ bestimmt. Die echte Zerfallszeit ist nicht durch die Unsicherheit der Rekonstruktion beeinflusst, sondern entspricht der Zerfallszeit, die in das simulierte Ereignis als Eingabeparameter gegeben und daher "`echte"' Zerfallszeit genannt wird. Wie in Kapitel \ref{ch:tres} gezeigt wird, weicht die echte Zerfallszeit in der Größenordnung der Zerfallszeit nur gering von der rekonstruierten Zerfallszeit ab. In diesem Kapitel wird die echte Zerfallszeit verwendet, da für die Beschreibung des Lebensdauermodells in Kapitel \ref{ch:fitb} die echte Zerfallszeit der Exponentialverteilung auf die Zeitakzeptanz korrigiert und anschließend mit der Zeitauflösung gefaltet wird. Durch die Faltung beschreibt der Fit an die rekonstruierte, gemessene Zeitverteilung die theoretische echte Verteilung.
+
+Die produzierten $B_s^0$-Mesonen entstammen einer generierten Verteilung der echten Zerfallszeit mit der Wahrscheinlichkeitsdichte des exponentiellen Zerfalls mit dem Parameter $\tau_{B_s^0}=$1.504 ps. Dieser Wert entspricht der in simulierten Ereignissen verwendeten Annahme des Standardmodells.
+
+Die Zeitakzeptanz wird durch zwei unterschiedliche Detektor- und Selektionseffekte beeinflusst, welche im Folgenden phänomenologisch erklärt werden: Zu kleinen Zeiten wird eine ansteigende Funktion erwartet, da insbesondere die IP-Schnitte viele $B_s^0$-Kandidaten mit kleinen Zerfallszeiten wegschneiden nur wenige $B_s^0$-Kandidaten selektiert werden. Da es sich um keinen harten Schnitt, wie etwa auf die Zerfallszeit handelt, wird ein glatter Anstieg der Verteilung zu erwarten. 
+
+Besonders effektiv, um Kaonen aus dem Primärvertex zu unterbinden, wäre ein Schnitt auf die Zerfallszeit, da eine signifikant von Null verschiedene Zerfallszeit ein Merkmal für die $B_s^0$-Signalsignatur zur Unterscheidung von Untergrundereignissen ist. Er würde die Verteilung der Zerfallszeit zu einer bestimmen Zerfallszeit abschneiden und auf die Beschreibung der Lebensdauer keinen direkten Effekt haben. Dieser Schnitt wird bei dieser Analyse allerdings nicht verwendet, weil ein Schnitt auf den Stoßparameter (IP) mit weniger Rechenleistung bei der Rekonstruktion durchgeführt werden kann. Während für den IP nur die Information einer rekonstruierten Kaonspur und der Primärvertices benötigt wird, benötigt der Algorithmus zur Bestimmung der Zerfallszeit zusätzlich die Informationen der vier Kaonspuren für die Sekundärvertexrekonstruktion, den Impuls sowie die Masse des $B_s^0$-Mesons. Der IP-Schnitt ist jedoch kein abrupter Schnitt auf die Zerfallszeit, sondern schneidet auf Ereignisse aus dem Primärvertex in einer Art, so dass die Zerfallszeitverteilung glatt bleibt.
+
+
+Zu höheren Zeiten tritt der Effekt auf, dass geometrisch bedingt die Rekonstruktionseffizienz sinkt. Grund dafür ist die räumliche Anordnung der Streifendetektoren im VELO mit größeren Abständen bei höherer Distanz zu den Kollisionspunkten, sodass die Zerfallslänge mit größeren Unsicherheiten belegt wird und manche Zerfälle nicht rekonstruiert werden. 
+
+Analytisch werden diese phänomenologischen Effekte der Zeitakzeptanz mit einer Fitfunktion $\epsilon_{Zeit,fit}(t_{echt})$ mit freien Parametern in Abhängigkeit der echten Zerfallszeit $t_{echt}$ beschrieben:
+
+\[\epsilon_{fit,Zeit}(t_{echt}) \propto \frac{(a(t_{echt}-t_0))^n}{1+(a(t_{echt}-t_0))^n}(1-c(t_{echt}-t_0)).\]
+
+Den Effekt der Selektion beschreibt der Anstieg der Fitfunktion, der mit den Parametern $a$ und $n$ parametrisiert wird und der Parameter $t_0$, der die Fitfunktion nach rechts verschiebt. Die nachlassende Rekonstruktionseffizienz bei langen Zerfallszeiten wird mit dem Term $(1-c\cdot t_{echt})$ beschrieben. Er hat den größten Einfluss auf die Lebensdauermessung. Je größer der Parameter $c$ im Fit an das Lebensdauermodell festgesetzt wird, desto größer wird auch $\tau_{B_s^0}$ angenommen, um die vorliegenden Ereignisse zu beschreiben. 
+
+
+Abbildung \ref{fig:ctac} zeigt den Fit an die Verteilung der Zeitakzeptanz. Der Fit wird bei $t_{echt}$=0.2 ps an der zur Verschiebung $t_0$ nächstliegenden Bingrenze begonnen. Die Fitfunktion beschreibt die Zeitakzeptanz mit $\chi^2/nDoF \approx$ 0.7 bzw. 1.1, welche in der Größenordnung von 1 liegt, was einer guten Beschreibung der Ereignisse durch den Fit entspricht. Die sich dabei ergebenden Fitparameter stehen in Tabelle \ref{table:ctacfit}. Auf Grund der exponentiell abnehmenden Ereignisse zu hohen Zeiten wurde die Breite der Bins mit der Zeit ansteigend gewählt. 
+
+Die ermittelte Parametrisierung der Effizienz wird im Lebensdauerfit verwendet, in dem die Parameter festgesetzt werden.
+
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/ctac_Bs2PhiPhi_MC_2011.eps}} 
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/ctac_Bs2PhiPhi_MC_2012.eps}}
+\caption{Verteilung der Zeitakzeptanz als Nachweiseffizienz des Detektors ermittelt an simulierten $B_s^0$-Signalereignissen 2011 (links) und 2012 (rechts)}
+\label{fig:ctac}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent\begin{centering}
+\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+a [ps$^{-1}$]& 2.363 $\pm$ 0.052  & 2.287 $\pm$ 0.059 \tabularnewline
+%b & 0.01824 $\pm$ 0.00033 & 0.01774 $\pm$ 0.00036 \tabularnewline
+c [ps$^{-1}$]& 0.0222 $\pm$ 0.0042  & 0.0324 $\pm$ 0.0043 \tabularnewline
+n & 1.969 $\pm$ 0.084  & 1.800 $\pm$ 0.062 \tabularnewline
+t$_0$ [ps] & 0.1265 $\pm$ 0.0049  & 0.1284 $\pm$ 0.0043 \tabularnewline
+\hline
+$\chi^2/nDoF$ & 21.3/32 & 36.6/32 \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Ergebnisse der Parameter aus dem Fit an die Verteilung der Zeitakzeptanz aus simulierten $B_s^0$-Signalereignissen 2011 und 2012}
+\label{table:ctacfit}
+\end{table}
+
+
+
+%
+%\section{Umgewichten der Signal-Ereignisse von Daten} \label{sweighting}
+%Um die Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons  korrekt zu bestimmen, müssen Signal- und Untergrundereignisse möglichst präzise voneinander separiert werden, da der Fit des Lebensdauermodells nur an echte $B_s^0$-Ereignisse erfolgen soll. In Kapitel \ref{ch:massmodell} in der Verteilung der invarianten $B_s^0$-Masse in Abbildung \ref{fig:datasignalmass} befindet sich nach der Selektion und multivariablen Analyse noch ein Anteil an Untergrundereignissen in den Daten. Mit Hilfe der Fitresultate wird jedem Ereignis in der $_s\mathcal{P}$lot-Methode \cite{$_s\mathcal{P}$lot}  ein Gewicht abhängig vom Signalcharakter zugeordnet. Abbildung \ref{fig:sweights} zeigt die Verteilung der Gewichte zur korrespondierenden Masse. Hier erkennt man $B_s^0$-Kandidaten, die nahe am Erwartungswert der Massenverteilung liegen, mit einem hohen Gewicht, was einer kleinen Wahrscheinlichkeit für ein Untergrundereignis entspricht. Mit diesen erhaltenen Verteilung der Gewichte werden Zerfallszeit für den Lebensdauerfit an Ereignisse aus Daten in Abbildung \ref{fig:tauData} gefüllt.
+%
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_$_s\mathcal{P}$lot_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_$_s\mathcal{P}$lot_2012.eps}}
+%\caption{Gewichtungsverteilung der $B_s^0$-Signalereignisse aus Daten 2011 (links) und 2012 (rechts)}
+%\label{fig:sweights}
+%\end{figure} 
+
+\pagebreak
+\section*{ }
+
+\newpage
+%\section{Bestimmung der Lebensdauer $\tau_{B_s^0\rightarrow \phi \phi$}}
+\section{Modell für die Bestimmung der Lebensdauer $\tau_{B_s^0}$ aus gemessener Zerfallszeitverteilung}
+In diesem Kapitel wird das Fitmodell der Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons im Zerfallskanal $B_s^0\rightarrow \phi \phi$ beschrieben. Mit Hilfe der aus simulierten Ereignissen erhaltenen Zeitakzeptanz und der Zeitauflösung ist das Lebensdauermodell dieser Arbeit eindeutig bestimmt. Damit gehen Ergebnisse aus simulierten Studien in diese Analyse ein. Die daraus resultierende Unsicherheit wird in Kapitel \ref{ch:syst} aufgeführt. 
+Zunächst wird die Fitmethode beschrieben. Dann wird das vollständige Fitmodell an generierten Ereignissen validiert und zuletzt an vollständig simulierten Ereignissen getestet.
+%In Unterkapitel \ref{sweighting} werden Signal- und Untergrundereignisse voneinander getrennt, so dass nur noch die Zerfallszeit echter $B_s^0$-Signalereignisse in den Fit der Lebensdauer an Ereignisse aus Daten eingehen.
+
+\subsection{Beschreibung des Fits}
+\label{ch:fitb}% \cite{RooFit}
+Für den Fit an die Zerfallszeitverteilung wird ein ungebinnter Maximum-Likelihood-Fit verwendet \cite{maxil}. Die Anpassung erfolgt dabei nicht an die mit Zerfallszeiten der $B_s^0$-Kandidaten gefüllten Bins, sondern basiert auf einer Methode der Maximierung einer Wahrscheinlichkeitsdichte. Die ungebinnte Fit-methode bietet sich hier an, da sie unabhängig von der Binunterteilung ist, die bei geringer Statistik Einfluss auf das Ergebnis der Lebensdauer haben kann.
+
+Die Wahrscheinlichkeitsdichte $\mathcal{P}(\vec{x},\vec{a})$ beschreibt die Wahrscheinlichkeit, bestimmte Messwerte $\vec{x}$ unter einem festen Parameterset $\vec{a}$ zu messen. Diese Wahrscheinlichkeitsdichten von Einzelmessungen $\mathcal{P}_i(\vec{x},\vec{a})$ werden aufmultipliziert zur Gesamtwahrscheinlichkeit, der sogenannten Likelihood-Funktion $\mathcal{L}$, der Anzahl der rekonstruierten $B_s^0$-Kandidaten, $N_{Sig}$:
+\[\mathcal{L}=\prod_i^{N_{sig}} \mathcal{P}_i(\vec{x},\vec{a}).\] %welche während des Fits durch Variierung der Parameter maximiert wird. 
+Das Logarithmieren der Wahrscheinlichkeitsdichte $\log(\mathcal{L})$ wird aus praktischen Gründen durchgeführt, um das numerische Berechnungen zu vereinfachen:
+\[\log(\mathcal{L})=\sum_i \mathcal{P}_i(\vec{x},\vec{a}).\]
+Beim Maximum-Likelihood-Fit werden die Parameter $\vec{a}$ so variiert, dass sie $\log(\mathcal{L})$ maximieren und somit die beste Realisierung der Gesamtwahrscheinlichkeitsdichte darstellen.
+
+
+Die Wahrscheinlichkeitsdichte des Lebensdauermodells für eine Einzelmessung kann zunächst als theoretische Exponentialverteilung, 
+\[\mathcal{P}_i(t;\tau_{B_s^0}) \propto \exp(-\frac{t}{\tau_{B_s^0}}),\] mit der Lebensdauer $\tau_{B_s^0}$ und der Zerfallszeit $t$ der $B_s^0$-Kandidaten beschrieben werden. Diese Zeit entspricht der in Kapitel \ref{ch:acc} eingeführten echten Zerfallszeit.  
+Kombiniert man nun die Wahrscheinlichkeitsdichte dieses exponentiellen Zerfalls mit der Zeitakzeptanz, erweitert sich die Wahrscheinlichkeitsdichte mit festen Parametern $a,c,n$ des Zeitakzeptanzfits aus Kapitel \ref{ch:acc} zu
+\[\Rightarrow \mathcal{P}_i(t;\tau_{B_s^0}) \propto \exp(-\frac{t}{\tau_{B_s^0}}) \cdot \epsilon_{Zeit}(t;a,c,n,t_0).\]
+
+Um das zeitliche Auflösungsvermögen des Detektors in den Lebensdauerfit mit einfließen zu lassen, wird die Zerfallsfunktion mit der Zeitauflösung gefaltet. Dadurch wird die das Fitmodell auf die rekonstruierte Zerfallszeit $t_{rek}$ anwendbar. Mathematisch ist eine Faltung wie folgt definiert:
+\[ f(x) \otimes g(x)=\int\limits_{-\infty}^{\infty}f(t')g(t-t')dt'.\] 
+Die Faltung mit einer Gaußfunktion bewirkt ein Verschmieren dieser Funktion. Im Fitprozess wird die Faltung durch die schnelle Fourier-Transformation \cite{FFT} durchgeführt, die einen effizienteren Algorithmus bietet. 
+
+Die Implementierung der Faltung mit der Zeitauflösungsfunktion erweitert die Wahrscheinlichkeitsdichte einer Einzelmessung zu,
+\begin{align*}
+\Rightarrow &\mathcal{P}_i(t;\tau_{B_s^0}) \propto  \\ & \big( \exp(-\frac{t}{\tau_{B_s^0}}) \cdot \epsilon_{fit,Zeit}(t;a,c,n,t_0)\big)\otimes \mathcal{TG}_{ZA}(t;\mu_t,\sigma_1,\sigma_2,\sigma_3,f_1,f_2),
+\end{align*}
+wobei hier das Zeitauflösungsmodell aus Kapitel \ref{ch:tres} benutzt wird.
+
+%Die auf die ermittelten Parameter fixierte Akzeptanzfunktion wird nun mit der exponentiellen Zerfallsfunktion multipliziert, mit dem Tripelgauß gefaltet und anschließend mit der Gesamtfitfunktion $\mathcal{F}$ gefittet, wobei $\tau$ der einzig freie Parameter ist. 
+%\[\mathcal{F} =\big( \exp(\frac{t}{\tau}) \epsilon_{acc,fit} \big)\otimes TG\]
+%Abschließend ist die zu maximierende eine Likelihood-Funktion $\mathcal{L}$
+%\[\mathcal{L}=\prod_i^{N_{Sig}} \mathcal{P}_i(\vec{x},\vec{a})\]
+%konstruiert die die Einzelwahrscheinlichkeiten der $N_{Sig}$ Ereignisse der rekonstruierten $B_s^0$-Kandidaten. 
+
+\subsection[Validierung des Fitmodells durch generierte $B_s^0$-Signalereignisse]{Validierung des Fitmodells durch generierte $B_s^0$-Signal-ereignisse}
+Zum Überprüfen der Fitmethode wird diese an generierten Ereignissen getestet. Dabei werden Ereignisse gemäß der Verteilung der Gesamtwahrscheinlichkeitsdichte erzeugt. Diese Sätze von Ereignissen enthalten jeweils die gleiche Anzahl an Ereignissen wie die von LHCb aufgenommenen Daten und unterliegen statistischen Schwankungen. Aus einem Fit an diese Datensätze wird erwartet, dass der Fitparameter und dessen statistische Unsicherheit reproduziert werden, falls die Fitmethode korrekt implementiert worden ist. 
+
+Um quantitative Aussagen treffen zu können, werden viele solcher Datensätze, sogenannte Pseudoexperimente, erzeugt, an die die Fitfunktion angepasst wird \cite{Verkerke2003}. Erwartet wird eine Normalverteilung des Fitparameters um den generierten Wert. Zur Überprüfung der Fitmethode ist die sogenannte Pull-Verteilung $(x-x_0)/{\Delta x}$ mit gefittetem Parameterwert $x$, generiertem Wert $x_0$ und der statistischen Unsicherheit $\Delta x$ definiert \cite{Karbach2012}. Damit der gefittete Parameter dem 
+generiertem Wert entspricht, soll die Pullverteilung gaußförmig um den Mittelwert $\mu=0$ schwanken. Eine Breite der Pullverteilung $\sigma=1$ zeigt, dass die Abweichung der gefitteten Parameter im Mittel der angenommenen Unsicherheit entspricht und der Fit die statistische Unsicherheit korrekt berücksichtigt.
+
+Im Rahmen dieser Arbeit werden 1000 Pseudoexperimente mit der entsprechenden Anzahl an Signalereignissen aus Kapitel \ref{ch:massmodell} generiert und die Lebensdauer mit Hilfe der entwickelten Fitprozedur extrahiert. Für den Fitparameter $\tau_{B_s^0}$ wird eine Verteilung der gefitteten Werte, die Verteilung der statistischen Unsicherheit und die sich daraus ergebende Pullverteilung erstellt, an die eine einfache Gaußfunktion gefittet wird, um ihre Breite und ihren Mittelwert zu bestimmen. Die Ergebnisse für die Lebensdauer mit Eingabeparameter $\tau$=1.629 ps werden in Abbildung \ref{fig:toytau} aufgeführt. Eine Übersicht der Ergebnisse der Pseudo-experimente wird in Tabelle \ref{table:toy} aufgelistet.
+
+\begin{figure}[h!]
+%\captionsetup[subfigure]{labelformat=empty}
+    \subfigure[Verteilung von $\tau$ in Pseudoexperimenten mit Eingabeparameter $\tau$=1.629 ps]{\includegraphics[width=0.51\textwidth]{eps/TauDistribution.jpg}}
+    \subfigure[Verteilung der statistschen Unsicherheit von $\tau$ in Pseudoexperimenten mit 1139 Ereignissen]{\includegraphics[width=0.51\textwidth]{eps/TauError.jpg}}
+\begin{centering}
+\addtocounter{subfigure}{-1}
+\subfigure{\includegraphics[width=0.25\textwidth]{eps/white.jpg}}
+    \subfigure[Pull-Verteilung von $\tau$ in Pseudoexperimenten]{\includegraphics[width=0.51\textwidth]{eps/TauPullDistribution.jpg}}
+\end{centering}
+\caption{Übersicht der 1000 generierten Verteilungen mit 1139 Ereignissen zur Überprüfung der Fitmethode von Lebensdauer $\tau$ und der erwarteten statistischen Unsicherheit $\sigma_{\tau}$}
+\label{fig:toytau}
+\end{figure} 
+
+\begin{table}[h!]
+%\noindent \begin{centering}\begin{tabular}{c||c|c||c|c}
+%Parameter FIXME&Pull $\mu$ 2011&Pull $\sigma$ 2011&Pull $\mu$ 2012&Pull $\sigma$ 2012\tabularnewline
+%\hline 
+%$\tau$&0.005$\pm$0.031&0.991$\pm$0.022&-0.0513$\pm$0.032&1.008$\pm$0.0023\tabularnewline 
+\noindent \begin{centering}\begin{tabular}{c|c|c}
+Parameter&Pull $\mu$ &Pull $\sigma$ \tabularnewline
+\hline 
+$\tau$&0.005$\pm$0.031&0.991$\pm$0.022 \tabularnewline 
+\end{tabular}
+\par\end{centering}
+\caption{Ergebnisse der Pullverteilung aus 1000 selbständig generierten Pseudoexperimenten mit 1139 Ereignissen}
+\label{table:toy}
+\end{table}
+
+Die Ergebnisse des Pulls von $\tau_{B_s^0}$ in Tabelle \ref{table:toy} entsprechen im Rahmen der statistischen Unsicherheit den Annahmen und bestätigen die Fitprozedur. Für den Lebensdauerfit an 1139  $B_s^0$-Signalkandidaten aus Daten von 2011 wird eine statistische Unsicherheit von 0.05 ps geschätzt.
+
+
+
+\subsection[Validierung des Fitmodells mit vollständig simulierten $B_s^0$-Signal-ereignissen]{Validierung des Fitmodells mit vollständig simulierten $B_s^0$-Signalereignissen}
+\label{mcfit}
+In einem weiteren Schritt wir der Lebensdauerfit mittels vollständig simulierter Ereignisse überprüft. In die Simulation dieser Ereignisse gehen Detektor-effekte und Untergrundereignisse ein, wie sie auch bei Ereignissen aus Daten erwartet werden. Die Fitfunktion aus Kapitel \ref{ch:fitb} wird an diese vollständig simulierten Ereignissen gefittet. Der exponentielle Zerfall mit Korrekturen zu Zeitauflösungs- und Zeitakzeptanzeffekten sollte dem Parameter der generierten simulierten Ereignissen entsprechen, da die Zeitakzeptanz aus diesem Ereignissatz bestimmt wurde. 
+
+Die Abbildung \ref{fig:tauMC} zeigt den Fit des Lebensdauermodells an simulierte $B_s^0$-Signalereignisse mit Ergebnissen in Tabelle \ref{table:tauMCresults}. Da es sich um einen ungebinnten Fit handelt, werden die Ereignisbins nur zu illustrativen Zwecken dargestellt, um die Ereignisse mit dem Fit zu vergleichen. Zusätzlich zeigt die Abbildung die Verteilung des Pulls, also dem Verhältnis von Abweichung der Ereignisse zum Fit zu dessen Unsicherheit pro dargestelltem Bin. Bei einer guten Beschreibung des Fits liegt der Pull in 68\% der Fälle innerhalb des Intervalls [-1,1]. Die Messwerte schwanken ohne erkennbare Tendenz um die Fitkurve.
+
+%include http://root.cern.ch/root/htmldoc/tutorials/roofit/rf109_chi2residpull.C.html
+
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/roo_taufitMC_2011_log_advanced.eps}} %logy
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/roo_taufitMC_2012_log_advanced.eps}}
+\caption{Fit des Lebensdauermodells $\tau_{B_s^0 \rightarrow \phi\phi}$ mit Pull an die Zerfallszeitverteilung der vollständig simulierten $B_s^0$-Signalereignisse 2011 (links) und 2012 (rechts)}
+\label{fig:tauMC}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+$\tau$ & 1.511 $\pm$ 0.007 ps& 1.511 $\pm$ 0.007 ps \tabularnewline
+\end{tabular}
+\par \end{centering}
+\caption{Übersicht der Ergebnisse des Lebensdauerparameters aus dem Fit an die Verteilung der Zerfallszeit der vollständig simulierten $B_s^0$-Signalereignisse 2011 und 2012}
+\label{table:tauMCresults}
+\end{table}
+
+Eine Analyse der Pullverteilung zeigt, dass die Ereignisse nicht symmetrisch um den Fit schwanken, sondern der Fit anfangs unter- und gegen Ende oberhalb der Verteilung der Ereignisse liegt. Dies weißt auf eine systematische Unsicherheit auf Grund der Wahl des Korrekturfaktors $c$ aus der Zeitakzeptanz hin.
+Das Ergebnis stimmt im Rahmen der statistischen Unsicherheit (1$\sigma$) mit dem generierten Wert für simulierten Ereignisse, $\tau=1.504$ ps, überein.
+
+%\subsection{Umgewichten der Signal-Ereignisse von Daten} \label{sweighting}
+%Um die Lebensdauer $\tau_{B_s^0}$ des $B_s^0$-Mesons  korrekt zu bestimmen, müssen Signal- und Untergrundereignisse möglichst präzise voneinander separiert sein, da der Fit des Lebensdauermodells nur an echte $B_s^0$-Ereignisse erfolgen soll. In Kapitel \ref{ch:massmodell} zeigt Abbildung \ref{fig:datasignalmass} die Verteilung der invarianten $B_s^0$-Masse noch ein Anteil an Untergrundereignissen in den Ereignissen aus Daten nach der Vorselektion und der multivariablen Analyse. 
+%
+%Mit Hilfe der Fitresultate ist jedem Ereignis in der $_s\mathcal{P}$lot-Methode \cite{sweight} ein Gewicht abhängig vom Signalcharakter zugeordnet. Abbildung \ref{fig:sweights} zeigt die Verteilung der Gewichte zur korrespondierenden Masse. Hier erkennt man $B_s^0$-Kandidaten, die nahe am Erwartungswert der Massenverteilung liegen, mit einem hohen Gewicht, was einer kleinen Wahrscheinlichkeit für ein Untergrundereignis entspricht. Mit diesen erhaltenen Verteilung der Gewichte sind die Zerfallszeiten für den Lebensdauerfit an Ereignisse aus Daten in Abbildung \ref{fig:tauData} gefüllt.
+%
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_sWeight_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/Bs_sWeight_2012.eps}}
+%\caption{Gewichtungsverteilung der $B_s^0$-Signalereignisse aus Daten 2011 (links) und 2012 (rechts)}
+%\label{fig:sweights}
+%\end{figure} 
+
+
+\pagebreak
+\section*{ }
+
+\newpage
+\section{Bestimmung der Lebensdauer $\tau_{B_s^0}$}% von $B_s^0 \rightarrow \phi\phi$-Signalkandidaten aus Daten}
+Dieses Kapitel beschreibt die Bestimmung der Lebensdauer $\tau_{B_s^0}$ von 1139$\pm$38 $B_s^0 \rightarrow \phi\phi$-Signalkandidaten aus Daten von 2011 sowie 2668$\pm$62 Kandidaten von 2012. Die Selektion wird in Kapitel \ref{sweighting} beschrieben. Die $B_s^0 \rightarrow \phi\phi$-Signalkandi-daten wurden mittels Analyse der invarianten $K^+K^-K^+K^-$-Massenverteilung von Untergrundereignissen getrennt. 
+
+Das Lebensdauermodell aus Kapitel \ref{ch:fitb} wird an die Verteilung der Zerfallszeiten dieser $B_s^0\rightarrow \phi\phi$-Signalkandidaten in Abbildung \ref{fig:tauData} gefittet. Zur Beurteilung der Güte des Fits ist darin eine Pullverteilung enthalten. Damit durch das Umgewichten der $_s\mathcal{P}$lot-Methode, bei der Untergrundereignisse negative Gewichte zugewiesen werden, keine Bins negativ befüllt bleiben, wird die Anzahl der Bins in der Darstellung reduziert. Da es sich um einen ungebinnten Fit handelt, beeinflusst diese Visualisierung das Ergebnis nicht, sondern ermöglicht lediglich eine logarithmische Darstellung. Der Fit beginnt, wie bei der Bestimmung der Zeitakzeptanz, bei 0.2 ps. Die Ergebnisse der Lebensdauer $\tau_{B_s^0}$ werden in Tabelle \ref{table:tauDataresults} beschrieben.
+
+\label{ch:fit}
+\begin{figure}[h!]
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/roo_taufitData_reweighted_2011_log_advanced.eps}}
+    \subfigure{\includegraphics[width=0.51\textwidth]{eps/roo_taufitData_reweighted_2012_log_advanced.eps}}
+%\caption{Fit des der Zerfallszeit $B_s^0$ von Ereignissen aus Daten 2011 (links) und 2012 (rechts)}
+\caption{Fit des Lebensdauermodells $\tau_{B_s^0 \rightarrow \phi\phi}$ mit Pull an die Zerfallszeitverteilung der $B_s^0$-Signalkandidaten aus Daten 2011 (links) und 2012 (rechts)}
+
+\label{fig:tauData}
+\end{figure} 
+
+\begin{table}[h!]
+\noindent \begin{centering}\begin{tabular}{c|c|c}
+Parameter & Wert 2011 & Wert 2012 \tabularnewline
+\hline 
+$\tau$ & 1.624 $\pm$ 0.050 ps& 1.508 $\pm$ 0.030 ps \tabularnewline
+\end{tabular}
+\par\end{centering}
+%\caption{Übersicht der Ergebnisse des Fitparameters der Lebensdauer $\tau_{B_s^0}$ von Ereignissen aus Daten 2011 und 2012}
+\caption{Übersicht der Ergebnisse des Lebensdauerparameters aus dem Fit an die Verteilung der Zerfallszeitverteilung der $B_s^0$-Signalkandidaten aus Daten 2011 und 2012}
+\label{table:tauDataresults}
+\end{table}
+
+Die Lebensdauer $\tau_{B_s^0}$ im Zerfallskanal $B_s^0 \rightarrow \phi \phi$ wird mit $\tau_{B_s^0,2011}$=1.624 $\pm$0.050 ps bzw. $\tau_{B_s^0,2012}$=1.508$\pm$0.030 ps bestimmt. Die angegebene Unsicherheit ist die statistische Unsicherheit des Fits. Sie entspricht für die Daten aus 2011 dem erwarteten Wert für die Anzahl der Signalkandidaten. Aus der Pullverteilung ist im Gegensatz zu vollständig simulierten Ereignissen keine Tendenz zu erkennen. Die Ergebnisse der Jahre 2011 und 2012 stimmen innerhalb der statistischen Unsicherheit (2$\sigma_{stat}$) überein.  
+
+\newpage
+\section[Abschätzung der systematischen Unsicherheiten bei der \\ Bestimmung der Lebensdauer $\tau_{B_s^0}$]{Abschätzung der systematischen Unsicherheiten bei der Bestimmung der Lebensdauer $\tau_{B_s^0}$}
+\label{ch:syst}
+Beim Abschätzen der systematischen Unsicherheiten werden Aspekte untersucht, die die Bestimmung der Lebensdauer auf Grund der verwendeten Modelle beeinflussen können. In den folgenden Unterkapiteln wird beschriebenen, wie unter variierten Bedingungen die Lebensdauer $\tau_{B_s^0}$ erneut ermittelt wird. Die Differenzen zum Wert aus Kapitel \ref{ch:fit} werden als systematischen Unsicherheiten angenommen. %Sie sind abschließend in Tabelle \ref{table:systemerr} zusammengestellt.
+
+\subsection{Massenmodell}
+Im Kapitel \ref{ch:massmodell} wird der Untergrund durch ein lineares Modell beschrieben. Allerdings kann auch ein exponentieller Verlauf annommen werden. Dies hat einen Einfluss auf die mittels der $_s\mathcal{P}$lot-Methode bestimmten Signalgewichte. Wenn das konstante Untergrundmodell in eine exponentielles verändert wird, tritt bei Ereignissen aus Daten von 2011 eine Abweichung von 0.004 ps auf. Ein Effekt auf die Lebensdauer bei Ereignissen aus Daten 2012 wird nicht ermittelt, da die Beschreibung des Untergrunds mit Hilfe der Exponentialfunktion der des benutzten linearen Modells sehr ähnelt. 
+
+\subsection{Zeitakzeptanzfunktion}
+Wie im Kapitel \ref{ch:acc} beschrieben, hat der Korrekturterm für den langlebigen Bereich $(1-c\cdot t_{echt})$ den größten Einfluss der Akzeptanzfunktion auf die Lebensdauer. Je größer der Parameter $c$ im Fit an das Lebensdauermodell angenommen wird, desto größer wird auch $\tau_{B_s^0}$ bestimmt, um die vorliegenden Ereignisse zu beschreiben. 
+
+Außerdem ist die Zeitakzeptanz aus simulierten Ereignissen und nicht aus Ereignissen aus Daten bestimmt worden. Für die Implementierung dieser Parameter auf Ereignisse aus Daten muss eine systematische Unsicherheit angenommen werden. In ähnlichen Analysen wurde dabei der Parameter $c$ in Daten um ungefähr 10\% höher bestimmt als in simulierten Ereignissen \cite{thomas}.
+
+%Es wird überprüft, wie sehr der Anstieg zu kleinen Zeiten das Abfallen der Zeitakzeptanzfunktion zu großen Zeiten beeinflusst. %Daher wird der Fit der Zeitakzeptanz zu verschiedenen späteren Zeiten variiert. 
+In dieser Analyse wird konservativ vorgegangen und der Parameter $c$ um 50\% variiert und im Zeitakzeptanzfit fixiert. Mit den resultierenden Fitparametern der Akzeptanzfunktion wird anschließend die Lebensdauer bestimmt. %Dabei ist der Parameter c um $\approx$20\% vergrößert worden, was auch bei ähnlichen %den Wert von $\approx 30\%$ % !!!NACHGUCKEN!FINDE DAS PAPER NICHT LHCb-ANA-2011-055 (2013)!! 
+%Analysen als systematischer Fehler \cite{thomas} angenommen wurde, um den Unterschied zwischen Zeitakzeptanz auf simulierten und auf Daten ermittelten Ereignissen zu berücksichtigen. 
+Der beschriebene Effekt des Parameters $c$ ist der dominierende Anteil der systematischen Unsicherheiten mit $^{+0.011}_{-0.007}$ ps (2011) bzw. $^{+0.011}_{-0.008}$ ps (2012).
+  
+%Die Zeitakzeptanzfunktion ist eine empirische Funktion der Nachweiseffizienz, die lediglich den Anstieg zu kleinen Zeiten und die Effizienzabnahme zu großen Zeiten beschreiben soll. Die Lebensdauer sollte unabhängig vom verwendeten Fitmodell der Zeitakzeptanz sein. Daher wird die Lebensdauer mit eine zweiten Akzeptanzfunktion ANDERE SUCHEN! $\epsilon_{Vergleich}(t_{echt})$
+%\[\epsilon_{Vergleich}(t_{echt}) = \frac{a(1-c \cdot t_{echt})}{1+(d\cdot t_{echt})^{-b}}\]
+%überprüft, wobei die Veränderungen für die Lebensdauer nicht auflösbar sind. %Die Fits sind in verschiedenen Parametrisierungen deckungsgleich. 
+%Die Tabellen \ref{table:ctacfit2} und \ref{table:ctacfit} gleichen sich im wie erwartet im Parameter $c$, was eine Beschreibung des Anstiegs unabhängig von späteren Ereignissen deutet. 
+%
+%\begin{table}[h!]
+%\noindent\begin{centering}
+%\begin{tabular}{c|c|c}
+%Parameter & Wert 2011 & Wert 2012 \tabularnewline
+%\hline 
+%a & 0.01821 $\pm$ 0.00032 & 0.01761 $\pm$ 0.00035 \tabularnewline
+%b & 1.969 $\pm$ 0.068 & 1.800 $\pm$ 0.063 \tabularnewline
+%c & 0.01326 $\pm$ 0.00420  & 0.02049 $\pm$ 0.00433 \tabularnewline
+%d & 2.3626 $\pm$ 0.0522  & 2.2871 $\pm$ 0.0590 \tabularnewline
+%t$_0$ & 1.2654 $\pm$ 0.0050  & 1.2841 $\pm$ 0.0044\tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 34.52/32 & 57.38/32 \tabularnewline
+%\end{tabular}
+%\par \end{centering}
+%\caption{Übersicht der Ergebnisse der Parameter der überprüfenden Zeitakzeptanzfunktion aus simulierten Ereignissen 2011 und 2012}
+%\label{table:ctacfit2}
+%\end{table}
+
+
+%Um die Fehler der Zeitakzeptanz zu bestimmen, wurden einzeln die Parameter um $\pm \sigma$ im Fit der Akzeptanz fixiert geändert und dann mit den neugefitteten Akzeptanzparametern die Lebensdauer bestimmt. Dabei ergab sich für den Parameter a eine unsymmetrische Abweichung.
+%fixen oder nun nicht???
+
+\subsection{Wahl des Fitintervalls}
+Zusätzlich wird die Abhängigkeit des Fitintervalls für die Bestimmung der Zeitakzeptanz und der Lebensdauer überprüft. Dafür wird der Startpunkt des Zeitakzeptanzfits auf 0.0 ps sowie 0.4 ps variiert und die resultierenden Para-meter zu geändertem Startpunkt im Lebensdauerfit verwendet. Da der Anfangs-bereich der Zerfallszeitverteilung nicht durch einen physikalischen Prozess, sondern durch die Nachweiseffizienz des Detektors beschrieben wird, hat eine Verschiebung des Fitbereichs nicht zwangsläufig Einfluss auf die Bestimmung der Lebenszeit.
+Es tritt bei den Daten aus 2011 eine Abweichung von 0.017 ps mit $\tau_{B_s^0}$=1.641 ps auf, während die Abweichung bei Ereignissen aus 2012 von 0.007 ps bei $\tau_{B_s^0}$=1.515 ps auf weniger Abhängigkeit vom Fitintervall deutet. Die systematische Unsicherheit auf Grund des Fitmodells ist mit der systematischen Unsicherheit durch den Parameter $c$ der Zeitakzeptanz stark korreliert, da sich durch das Verschieben des Fitbereichs auch der Wert des Parameters $c$ ändert.
+
+\subsection{Zeitauflösung}
+Da die Zeitauflösung aus simulierten Ereignissen bestimmt wird, muss eine systematische Unsicherheit für die Übertragung der Ereignisse aus Daten angenommen werden. %In früheren Analysen \cite{BensonANA} betrug die Zeitauflösung auf Daten ca. 5 fs mehr als auf simulierte Ereignisse. Diese Abweichung wurde auf im Kapitel \ref{ch:tres} auf Ereignisse aus Daten ermittelt. Der Effekt der Faltung mit der Zeitauflösung auf die Lebensdauer ist allerdings klein, sodass selbst die Erhöhung der Zeitauflösung um 50 fs, was  \cite{BensonANA} motiviert, im Vergleich zur Zeitakzeptanz einen geringen Einfluss auf die Summe der systematischen Fehler hat.
+Im Kapitel \ref{ch:tres} wird eine Abweichung von simulierten $B_s^0$-Signalereignissen auf prompte Pseudo-$B_s^0$-Kandidaten aus Daten von ungefähr 0.05 ps ermittelt. Zur Bestimmung der systematischen Unsicherheit auf Grund der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen wird das Ergebnis der Zeitauflösung aus prompten Pseudo-$B_s^0$-Kandidaten aus Daten in den Lebensdauerfit implementiert. Der Effekt der Faltung mit der Zeitauflösung auf die Lebensdauer ist allerdings klein, da die Exponentialfunktion der Lebensdauer in der Größenordnung der Breite der Zeitauflösung eine glatte Verteilung ist. So treten Abweichungen von 0.001 ps bzw. 0.002 ps auf.
+
+
+%\subsection{Fitmodell}
+%In Kapitel \ref{mcfit} weicht der Fit an die vollständig simulierten $B_s^0$-Signalereignisse mit $\tau_{B_s^0\rightarrow \phi\phi}$=1.511$\pm$0.007 ps systematisch um 0.007 ps vom generierenden Parameterwert $\tau_{B_s^0}$=1.504 ps ab, obwohl durch die Bestimmung der Zeitakzeptanz auf simulierten Ereignissen gerade dieser Wert durch den Fit reproduziert werden sollte. Daher wird diese Abweichung als systematische Unsicherheit des Fitmodells angenommen. 
+
+\subsection{Impuls- und Längenskala}
+Laut Kapitel \ref{ch:bsphiphi} wird die rekonstruierte Zerfallszeit mit dem Viererimpuls p und der Zerfallslänge |$\vec{d}$| ermittelt. Die Zerfallslänge ist durch die Ortsauf-lösung der z-Skala mit einer relativen Unsicherheit von 0.1\%  \cite{mBsoszi} limitiert, was sich in der Lebensdauermessung mit einer systematischen Unsicherheit von 0.016 bzw. 0.015 ps widerspiegelt.
+Der Massenskala wird bei bekannten Resonanzen eine Genauigkeit der nicht kalibrierten Impulsskala von <0.1\% zugeordnet. Bei der Berechnung der Zerfallszeit heben sich die Unsicherheiten teilweise gegenseitig auf, da diese in die rekonstruierte $B_s^0$-Masse und den $B_s^0$-Impuls eingehen. In der Summe wird von einer relativen Unsicherheit von 0.02\%  \cite{mBsoszi} ausgegangen, was sich in einer systematischen Unsicherheit auf die Lebensdauer in 0.0003 ps überträgt.
+% \cite{} http://arxiv.org/pdf/1112.4311v2.pdf
+
+
+%\ensuremath{[}ps\ensuremath{]}
+
+\subsection{Übersicht der gesamten systematischen Unsicherheiten}
+
+Die gesamten systematischen Unsicherheiten ergeben sich als Summe der Quadrate der Einzelunsicherheiten und werden in Tabelle \ref{table:systemerr} aufgeführt. Die systematischen Unsicherheiten der Lebensdauer $\Delta\tau_{syst,gesamt}$ betragen  $^{+0.021}_{-0.008}$ bzw. $^{+0.013}_{-0.009}$ ps.
+
+\pagebreak[4]
+
+\begin{table}[h!]
+\noindent\begin{centering}
+\begin{tabular}{c|c|c}
+Methode & $\Delta\tau_{syst,2011}$ [ps]& $\Delta\tau_{syst,2012}$ [ps]\tabularnewline
+\hline 
+Alternatives Massenmodell&$^{+0.004}$& \tabularnewline
+Zeitauslösung $\sigma_{total}\;\pm$0.05 ps & $_{-0.001}$ & $_{-0.002}$ \tabularnewline
+Variation des Zeitakzeptanz-Parameters c& $^{+0.011}_{-0.007}$&$^{+0.011}_{-0.008}$ \tabularnewline
+Variation des Fitintervalls $\pm$ 0.2 ps & $^{+0.017} $ & $^{+0.007} $\tabularnewline
+%Variation des Zeitakzeptanz-Parameters c mit rel. Fehlern von Daten& +0.033  & +0.022 \tabularnewline
+%Decay length resolution  0.1\%  & 0.0015\tabularnewline
+%Fitmodell &$^{+0.007}$&$^{+0.007}$ \tabularnewline
+relative Auflösung der Längenskala 0.1\% & 0.0016 & 0.0015\tabularnewline
+relative Auflösung der Impulsskala 0.02\% & 0.0003 & 0.0003\tabularnewline
+\hline \hline
+Quadratische Summe $\Delta\tau_{syst,gesamt}$ &  $^{+0.021}_{-0.008}$&$^{+0.013}_{-0.009}$ \tabularnewline
+
+\end{tabular}
+\par\end{centering}
+\caption{Übersicht der systematischen Unsicherheiten $\Delta\tau_{syst}$ auf die Bestimmung Lebensdauer $\tau_{B_s^0}$ aus $B_s^0$-Signalkandidaten von 2011 und 2012}
+\label{table:systemerr}
+\end{table}
+
+\vspace{20cm}
+%\newpage
+\pagebreak[4]
+
+\section{Zusammenfassung}
+In dieser Arbeit wird die Lebensdauer $\tau_{B_s^0}$ mit $B_s^0\rightarrow \phi \phi$-Zerfällen ermittelt. Die Ereignissen stammen aus Daten des LHCb-Experiments aus den Jahren 2011 und 2012 bei den Schwerpunktsenergien  von $\sqrt{s}_{2011}=7$ TeV und $\sqrt{s}_{2012}=8$ TeV. Diese entsprechen integrierten Luminositäten von $\mathcal{L}_{2011}= 1.1\;\text{fb}^{-1}$ und $\mathcal{L}_{2012}=2.0\;\text{fb}^{-1}$. 
+
+$B_s^0\rightarrow \phi \phi$-Signalkandidaten werden durch eine Vorselektion und eine multivariable Analyse das dem Datensatz extrahiert. Mittels der $_s\mathcal{P}$lot-Methode werden anhand der invarianten $K^+K^-K^+K^-$-Massenverteilung 1139$\pm$38 bzw. 2668$\pm$62 Signalkandidaten gefunden. 
+
+Es wird versucht, die Zeitauflösung mit prompten Pseudo-$B_s^0$-Kandidaten, die aus prompten $\phi$-Kandidaten aus dem Primärvertex gemimt werden, zu bestimmen. Dafür werden die Zerfallszeiten der Pseudo-$B_s^0$-Kandidaten aus Daten nach kinematischen Verteilungen der simulierten $B_s^0$-Signalereignisse umgewichtet. Des weiteren wird die Zeitauflösung der prompten Pseudo-$B_s^0$-Kandidaten aus Seitenbändern der invarianten $K^+K^-$-Massenverteilung überprüft. Die Zeit-auflösung aus prompten Pseudo-$B_s^0$-Kandidaten weicht deutlich von der Zeitauflösung aus simulierten $B_s^0$-Signalereignissen ab. Daher wird die Zeitauflösung sowie die Zeitakzeptanz aus simulierten $B_s^0$-Signalereignissen bestimmt. 
+
+Das Lebensdauermodell wird auf die Zeitakzeptanz und die Zeitauflösung des Detektors korrigiert. Ein ungebinnter Maximum-Likelihood-Fit bestimmt die Lebensdauer:
+\[(2011)\;\tau_{B_s^0}=1.624\pm0.050\;(stat)\;^{+0.021}_{-0.008}\;(syst)\;\text{ps }\]
+\[(2012)\;\tau_{B_s^0}=1.508\pm0.030\;(stat)\;^{+0.013}_{-0.009}\;(syst)\;\text{ps}.\]
+
+
+Eine Lebensdauermessung für den Zerfallskanal $B_s^0\rightarrow \phi \phi$ ist bisher nicht publiziert worden. 
+
+In der Theorie hat das $B_s^0$-Meson eine fest definierte Lebensdauer $\tau_{B_s^0}$. Da das Verhältnis der in diesem Zerfallskanal vorliegenden Masseneigenzustände $\ket{B_H}$ und $\ket{B_L}$ nicht bekannt ist, %Da das $B_s^0$-Meson physikalisch in einem Masseneigenzustand vorliegt, der in dieser Arbeit nicht bestimmt wird,
+gibt es keine eindeutige Referenz zur Lebensdauer $\tau_{B_s^0}$ mit $B_s^0\rightarrow \phi \phi$-Zerfällen. Der weltweite Mittelwert der Lebensdauer des $B_s^0$-Mesons beträgt $\tau_{B_s^0}=1.509\pm0.012\;\text{ps}$. Dieser setzt sich zusammen aus der Lebensdauer $\tau_{B_L}$=1.408 ps des Masseneigenzustands $\ket{B_L}$ und der Lebensdauer $\tau_{B_H}$=1.626 ps des Masseneigenzustands $\ket{B_H}$ \cite{lifetime2}. Die Ergebnisse der Lebensdauer $\tau_{B_s^0}$ dieser Arbeit liegen innerhalb des Bereiches mit den Lebensdauern der verschiedenen Masseneigenzuständen als Grenzen.
+
+Die Ergebnisse der Lebensdauer $\tau_{B_s^0}$ aus den Jahren 2011 und 2012 stimmen im Rahmen der statistischen Unsicherheit (2$\sigma_{stat}$) überein. Die Fitmethode sowie die statistische Unsicherheit werden mit generierten Ereignissen erfolgreich überprüft. Die systematischen Unsicherheiten werden durch den Korrekturterm der Zeitakzeptanz zu hohen Zerfallszeiten dominiert.
+
+  
+\vspace{4mm}
+In zukünftigen Arbeiten kann die Zeitakzeptanz aus $B_s^0\rightarrow D_s \pi$-Kandidaten aus Daten bestimmt werden. Um die Zeitauflösung aus prompten Pseudo-$B_s^0$-Kandidaten aus Daten bestimmen zu können, müssen die prompten Pseudo-$B_s^0$-Ereignisse erst aufbereitet und simulierte Ereignisse erstellt werden. 
+
+Da es sich beim Zerfall $B_s^0\rightarrow \phi \phi$ um einen seltenen Zerfall handelt, wird mit den Experimenten nach dem LHC-Upgrade 2015 eine größere Datenmenge für weitere Analysen verfügbar sein, die die statistische Unsicherheit verringern wird. 
+
+Die Ergebnisse dieser Arbeit zeigen, wie wichtig eine Beschreibung der Zeitakzeptanz aus Ereignissen aus Daten ist. Außerdem wird deutlich, dass seltene Zerfälle durch die Wahl einer geeigneten Selektion sorgfältig analysiert werden müssen und durch die geringe Anzahl an Ereignissen statistisch limitiert werden. %Die Frage, warum die Lebensdauerergebnisse von 2011 und 2012 so stark voneinander abweichen, kann nicht beantwortet werden.
+
+%\newpage
+%\section{Anhang}
+
+
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_bsptweighted_data_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_bsptweighted_data_2012.eps}}
+%\caption{Verteilung der Zeitauflösung der auf $B_s^0$-Transversalimpuls $p_T(B_s^0)$ umgewichteten Ereignisse (dunkelgrün) mit der unnormierten Verteilung (rot)  von prompten $\phi$ aus Daten (rot) von 2011 (links) und 2012 (rechts)}
+%\label{fig:tresbspt}
+%\end{figure} 
+%
+%
+%\begin{table}[h!]
+%\noindent \begin{centering}
+%\begin{tabular}{c|c|c}
+%Parameter&Wert 2011&Wert 2012\tabularnewline
+%\hline 
+%%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+%$\sigma_1$ [ps] & 0.2351 $\pm$ 0.0493 & 0.1057 $\pm$ 0.0033 \tabularnewline
+%$\sigma_2$ [ps]& 0.0935 $\pm$ 0.0260  & 0.2500 $\pm$ 0.0072 \tabularnewline
+%$\sigma_3$ [ps]& 0.0407 $\pm$ 0.0010 & 0.0434 $\pm$ 0.0008 \tabularnewline%
+%$f_1$ & 0.1199 $\pm$ 0.0072 & 0.4090 $\pm$ 0.0114   \tabularnewline
+%$f_2$ & 0.4898 $\pm$ 0.0214 & 0.2080 $\pm$ 0.0184 \tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 159.86/44 & 230.80/44\tabularnewline
+%\hline
+%$\sigma_{gesamt}$ [ps]&0.1055 $\pm$ 0.0021&0.1146 $\pm$ 0.0020 \tabularnewline
+%\end{tabular}
+%\par \end{centering}
+%\caption{Übersicht der Ergebnisse der Parameter des Fits der Zeitauflösungsverteilung auf $B_s^0$-Transversalimpuls $p_T(B_s^0)$ umgewichtete Ereignisse aus Daten}
+%\label{table:fitpromptdatarebspt}
+%\end{table}
+%
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_phiptweighted_data_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_phiptweighted_data_2012.eps}}
+%\caption{Verteilung der Zeitauflösung der auf $\phi$-Transversalimpuls $p_T(\phi)$ gewichteten Ereignisse (dunkelgrün) mit der unnormierten Verteilung (rot) von prompten $\phi$ aus Daten (rot) von 2011 (links) und 2012 (rechts)}
+%\label{fig:tresphipt}
+%\end{figure} 
+%
+%\begin{table}[h!]
+%\noindent \begin{centering}
+%\begin{tabular}{c|c|c}
+%Parameter&Wert 2011&Wert 2012\tabularnewline
+%\hline 
+%%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+%$\sigma_1$ [ps] & 0.2266 $\pm$ 0.0081 & 0.2475 $\pm$ 0.0092 \tabularnewline
+%$\sigma_2$ [ps]& 0.0897 $\pm$ 0.0039  & 0.1029 $\pm$ 0.0034 \tabularnewline
+%$\sigma_3$ [ps]& 0.0404 $\pm$ 0.0014 & 0.0441 $\pm$ 0.0010 \tabularnewline
+%$f_1$ & 0.1021 $\pm$ 0.0248 & 0.0889 $\pm$ 0.0094   \tabularnewline
+%$f_2$ & 0.4632 $\pm$ 0.0334 & 0.4560 $\pm$ 0.0201 \tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 40.13/44 & 85.96/44\tabularnewline
+%\hline
+%$\sigma_{gesamt}$ [ps]&0.0968 $\pm$ 0.0031&0.1040 $\pm$ 0.0027 \tabularnewline
+%\end{tabular}
+%\par \end{centering}
+%\caption{Übersicht der Ergebnisse der Parameter des Fits der Zeitauflösungsverteilung auf Transversalimpuls $p_T(\phi)$ umgewichtete Ereignisse aus Daten}
+%\label{table:fitpromptdatare}
+%\end{table}
+%
+%\begin{figure}[h!]
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_thetaweighted_data_2011.eps}}
+%    \subfigure{\includegraphics[width=0.51\textwidth]{eps/tres_thetaweighted_data_2012.eps}}
+%\caption{Verteilung der Zeitauflösung der auf $\phi$-Öffnungswinkel $\theta$-gewichteten Ereignissen (dunkelgrün) mit der unnormierten Verteilung (rot) von prompten $\phi$ aus Daten von 2011 (links) und 2012 (rechts)}
+%\label{fig:trestheta}
+%\end{figure} 
+%
+%\begin{table}[h!]
+%\noindent \begin{centering}
+%\begin{tabular}{c|c|c}
+%Parameter&Wert 2011&Wert 2012\tabularnewline
+%\hline 
+%%N & 55230 $\pm$ 234  & 0.0577 $\pm$ 0.0012\tabularnewline
+%%$\mu$ & 1.285$\cdot 10^{-5} \pm$ 2.346$\cdot 10^{-4}$ \tabularnewline
+%$\sigma_1$ [ps] & 0.2330 $\pm$ 0.0051 & 0.2471 $\pm$ 0.0065 \tabularnewline
+%$\sigma_2$ [ps]& 0.0418$\pm$ 0.0010  & 0.1029 $\pm$ 0.0031 \tabularnewline
+%$\sigma_3$ [ps]& 0.0915 $\pm$ 0.0030 & 0.0430 $\pm$ 0.0008 \tabularnewline
+%$f_1$ & 0.1193 $\pm$ 0.0071 & 0.1151 $\pm$ 0.0086   \tabularnewline
+%$f_2$ & 0.5424 $\pm$ 0.0258 & 0.4520 $\pm$ 0.0161 \tabularnewline
+%\hline
+%$\chi^2/nDoF$ & 117.7/44 & 226.92/44\tabularnewline
+%\hline
+%$\sigma_{gesamt}$ [ps]&0.1033 $\pm$ 0.0031&0.1103 $\pm$ 0.0024 \tabularnewline
+%\end{tabular}
+%\par \end{centering}
+%\caption{Übersicht der Ergebnisse der Parameter des Fits der Zeitauflösungsverteilung auf Öffnungswinkel $\theta(\phi)$ umgewichtete Ereignisse aus Daten}
+%\label{table:fitpromptdatare}
+%\end{table}
+
+
+\newpage
+\pagenumbering{Roman}
+\setcounter{page}{7}
+\selectlanguage{ngerman}
+\bibliographystyle{ieeetr}
+\bibliography{BA_LHCb_Aaron_Spring}
+
+\newpage
+\section*{Erkl\"{a}rung}
+
+Ich versichere, dass ich diese Arbeit selbstst\"{a}ndig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe.
+\vspace{2cm}
+\\
+Heidelberg, den 27. Februar 2014,  $\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;$..............................................
+
+%Unterschrift
+
+
+\end{document}
